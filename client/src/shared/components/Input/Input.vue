@@ -44,7 +44,7 @@ const clickLabel = () => {
     width: 100%;
     color: $text-black;
     font-size: $text-md;
-    margin-bottom: 0.5rem;
+    margin-bottom: $margin-1;
   }
 
   &__input {
