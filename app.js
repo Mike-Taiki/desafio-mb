@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const port = 3000;
 
@@ -17,7 +18,7 @@ const options = {
 app.use(express.static("static", options));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/static/index.html");
+  res.sendFile(path.join(__dirname, "/client/dist/index.html"));
 });
 
 app.listen(port, () => {
