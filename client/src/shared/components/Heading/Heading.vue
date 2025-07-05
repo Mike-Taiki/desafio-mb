@@ -1,11 +1,5 @@
 <script setup>
 import { headingOptionsEnum } from "./types.js";
-/**
- * Componente reutilizável de título H1.
- *
- * @component
- */
-
 const props = defineProps({
   level: {
     type: String,
