@@ -15,7 +15,7 @@ const options = {
   },
 };
 
-app.use(express.static("static", options));
+app.use(express.static("client/dist", options));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/dist/index.html"));
