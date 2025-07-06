@@ -4,6 +4,8 @@ import { useAttrs, useTemplateRef } from "vue";
 const attrs = useAttrs();
 const inputRef = useTemplateRef("input");
 const model = defineModel({ required: true });
+const randomId = Math.random().toString(36).slice(2, 9);
+const inputId = attrs.id ? "input-" + attrs.id + randomId : "input-" + randomId;
 
 defineProps({
   label: {
@@ -21,24 +23,25 @@ const clickLabel = () => {
     <label
       v-if="label"
       class="form-field__label"
-      :for="attrs.id"
+      :for="inputId"
       @click="clickLabel"
       >{{ label }}</label
     >
     <input
       ref="input"
       class="form-field__input"
+      :id="inputId"
       v-model="model"
-      v-bind="attrs"
     />
   </div>
 </template>
 <style lang="scss" scoped>
 .form-field {
   display: flex;
-  max-width: 50%;
+  flex-direction: column;
   flex-wrap: wrap;
-  flex-basis: 250px;
+  width: 100%;
+  max-width: 100%;
 
   &__label {
     width: 100%;
@@ -52,6 +55,7 @@ const clickLabel = () => {
     border: $border-1;
     border-radius: $radius-1;
     padding: $padding-1;
+    box-sizing: border-box;
   }
 }
 </style>
