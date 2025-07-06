@@ -1,16 +1,32 @@
 <script setup>
 import { ref } from "vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
-import Heading from "@/shared/components/Heading/Heading.vue";
-import Input from "@/shared/components/Input/Input.vue";
+import { StepsEnum, PersonTypeEnum } from "@/modules/register/types.js";
 import Step from "@/shared/components/Step/Step.vue";
+import SelectPersonType from "@/modules/SelectPersonType/SelectPersonType.vue";
+import Heading from "@/shared/components/Heading/Heading.vue";
 import Button from "@/shared/components/Button/Button.vue";
-import Radio from "@/shared/components/Radio/Radio.vue";
 
-const name = ref("");
-const currentStep = ref(1);
 const totalSteps = ref(5);
-const selectedOption = ref("");
+const currentStep = ref(StepsEnum.PERSON_TYPE);
+const selectedPersonType = ref(null);
+const steps = {
+  [StepsEnum.PERSON_TYPE]: "Seja bem vindo(a)",
+  [StepsEnum.INSERT_DATA]:
+    selectedPersonType.value === PersonTypeEnum.PHYSICAL
+      ? "Pessoa Física"
+      : "Pessoa Jurídica",
+  [StepsEnum.PASSWORD]: "Senha de acesso",
+  [StepsEnum.CONFIRM_DATA]: "Revise suas informações",
+};
+/**
+ * Selects the person.
+ * @param {PersonTypeEnum} selectedPersonType - The selected person type.
+ * @type {function}
+ **/
+const selectPersonType = (selectedPersonType) => {
+  selectedPersonType.value = selectedPersonType;
+};
 </script>
 
 <template>
@@ -20,29 +36,10 @@ const selectedOption = ref("");
       :current-step="currentStep"
       :total-steps="totalSteps"
     />
-    <Heading class="register__heading" :level="headingOptionsEnum.MD"
-      >Seja bem vindo(a)</Heading
-    >
-    <Input
-      class="register__input"
-      label="Endereço de e-mail"
-      id="email"
-      v-model="name"
-    />
-    <div class="register-person-type">
-      <Radio
-        value="Pessoa física"
-        label="Pessoa fisica"
-        id="pessoa_fisica"
-        v-model="selectedOption"
-      />
-      <Radio
-        value="Pessoa juridica"
-        label="Pessoa jurídica"
-        id="pessoa_juridica"
-        v-model="selectedOption"
-      />
-    </div>
+    <Heading class="register__heading" :level="headingOptionsEnum.MD">{{
+      steps[currentStep]
+    }}</Heading>
+    <SelectPersonType @selectedPersonType="selectPersonType" />
     <Button class="register__button" @click="currentStep++">Continuar</Button>
   </section>
 </template>
@@ -59,20 +56,6 @@ const selectedOption = ref("");
 
   &__heading {
     margin-bottom: $margin-6;
-  }
-
-  &__input {
-    margin-bottom: $margin-3;
-  }
-
-  &-person-type {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: $margin-3;
-
-    & > :nth-child(n + 1) {
-      margin-right: $margin-3;
-    }
   }
 }
 </style>
