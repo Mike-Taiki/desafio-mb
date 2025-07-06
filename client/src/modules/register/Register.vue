@@ -11,7 +11,42 @@ const totalSteps = ref(5);
 </script>
 
 <template>
-  <Step :current-step="currentStep" :total-steps="totalSteps" />
-  <Heading :level="headingOptionsEnum.MD">Seja bem vindo(a)</Heading>
-  <Input label="Endereço de e-mail" id="email" v-model="name" />
+  <section class="register">
+    <Step
+      class="register__step"
+      :current-step="currentStep"
+      :total-steps="totalSteps"
+    />
+    <Heading class="register__heading" :level="headingOptionsEnum.MD"
+      >Seja bem vindo(a)</Heading
+    >
+    <Input
+      class="register__input"
+      label="Endereço de e-mail"
+      id="email"
+      v-model="name"
+    />
+  </section>
 </template>
+<style lang="scss" scoped>
+.register {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+
+  &__step {
+    margin-bottom: $margin-1;
+    grid-column: 2 / 3;
+  }
+
+  &__heading {
+    margin-bottom: $margin-6;
+    grid-column: 2 / 3;
+  }
+
+  &__input {
+    grid-column: 2 / 3;
+  }
+}
+</style>
