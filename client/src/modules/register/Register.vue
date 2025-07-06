@@ -67,6 +67,7 @@ const selectedOption = ref("");
 
   &-person-type {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: $margin-3;
 
     & > :nth-child(n + 1) {
