@@ -5,10 +5,12 @@ import Heading from "@/shared/components/Heading/Heading.vue";
 import Input from "@/shared/components/Input/Input.vue";
 import Step from "@/shared/components/Step/Step.vue";
 import Button from "@/shared/components/Button/Button.vue";
+import Radio from "@/shared/components/Radio/Radio.vue";
 
 const name = ref("");
 const currentStep = ref(1);
 const totalSteps = ref(5);
+const selectedOption = ref("");
 </script>
 
 <template>
@@ -27,6 +29,20 @@ const totalSteps = ref(5);
       id="email"
       v-model="name"
     />
+    <div class="register-person-type">
+      <Radio
+        value="Pessoa física"
+        label="Pessoa fisica"
+        id="pessoa_fisica"
+        v-model="selectedOption"
+      />
+      <Radio
+        value="Pessoa juridica"
+        label="Pessoa jurídica"
+        id="pessoa_juridica"
+        v-model="selectedOption"
+      />
+    </div>
     <Button class="register__button" @click="currentStep++">Continuar</Button>
   </section>
 </template>
@@ -46,7 +62,16 @@ const totalSteps = ref(5);
   }
 
   &__input {
-    margin-bottom: $margin-6;
+    margin-bottom: $margin-3;
+  }
+
+  &-person-type {
+    display: flex;
+    margin-bottom: $margin-3;
+
+    & > :nth-child(n + 1) {
+      margin-right: $margin-3;
+    }
   }
 }
 </style>
