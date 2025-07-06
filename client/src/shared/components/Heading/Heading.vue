@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue";
 import { headingOptionsEnum } from "./types.js";
 const props = defineProps({
   level: {
@@ -8,10 +9,9 @@ const props = defineProps({
   },
 });
 
-const classes = {
-  heading: true,
-  [`heading-${props.level}`]: true,
-};
+const classes = computed(() => {
+  return ["heading", `heading-${props.level}`];
+});
 </script>
 <template>
   <h1 :class="classes">
