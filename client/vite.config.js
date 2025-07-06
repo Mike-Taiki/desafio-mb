@@ -12,7 +12,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "/public/style/variables.scss" as *;`,
+        additionalData: `@use "/public/style/styles.scss" as *;`,
         api: "modern",
       },
     },
