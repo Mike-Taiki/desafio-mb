@@ -37,16 +37,13 @@ const totalSteps = ref(5);
 
   &__step {
     margin-bottom: $margin-1;
-    grid-column: 2 / 3;
   }
 
   &__heading {
     margin-bottom: $margin-6;
-    grid-column: 2 / 3;
   }
 
   &__input {
-    grid-column: 2 / 3;
   }
 }
 </style>
