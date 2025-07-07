@@ -36,11 +36,21 @@ const selectPersonType = (selectedPersonType) => {
       :current-step="currentStep"
       :total-steps="totalSteps"
     />
-    <Heading class="register__heading" :level="headingOptionsEnum.MD">{{
-      steps[currentStep]
-    }}</Heading>
-    <SelectPersonType @selectedPersonType="selectPersonType" />
-    <Button class="register__button" @click="currentStep++">Continuar</Button>
+    <Heading
+      class="register__heading"
+      :level="headingOptionsEnum.MD"
+    >
+      {{
+        steps[currentStep]
+      }}
+    </Heading>
+    <SelectPersonType @selected-person-type="selectPersonType" />
+    <Button
+      class="register__button"
+      @click="currentStep++"
+    >
+      Continuar
+    </Button>
   </section>
 </template>
 <style lang="scss" scoped>
