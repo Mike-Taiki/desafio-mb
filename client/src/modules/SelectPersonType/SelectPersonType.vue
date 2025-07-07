@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { PersonTypeEnum } from "@/modules/register/types.js";
 import Input from "@/shared/components/Input/Input.vue";
 import Radio from "@/shared/components/Radio/Radio.vue";
-import { PersonTypeEnum } from "@/modules/register/types.js";
+import { ref } from "vue";
 
 const name = ref("");
 const selectedOption = ref("");
@@ -20,25 +20,18 @@ const personTypeOptions = [
 ];
 
 const emit = defineEmits(["selectedPersonType"]);
+
+const handleChange = (value) => {
+  selectedOption.value = value;
+  emit("selectedPersonType", value);
+};
 </script>
 
 <template>
-  <Input
-    class="register__input"
-    label="Endereço de e-mail"
-    id="email"
-    v-model="name"
-  />
+  <Input id="email" v-model="name" class="register__input" label="Endereço de e-mail" />
   <div class="register-person-type">
-    <Radio
-      v-for="option in personTypeOptions"
-      :key="option.value"
-      :value="option.value"
-      :label="option.label"
-      :id="option.id"
-      v-model="selectedOption"
-      @change="$emit('selectedPersonType', selectedOption)"
-    />
+    <Radio v-for="option in personTypeOptions" :id="option.id" :key="option.value" v-model="selectedOption"
+      :value="option.value" :label="option.label" @change="handleChange" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -52,7 +45,7 @@ const emit = defineEmits(["selectedPersonType"]);
     flex-wrap: wrap;
     margin-bottom: $margin-3;
 
-    & > :nth-child(n + 1) {
+    &> :nth-child(n + 1) {
       margin-right: $margin-3;
     }
   }
