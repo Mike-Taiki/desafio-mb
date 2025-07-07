@@ -2,7 +2,7 @@
 import { defineModel, useAttrs, useTemplateRef } from "vue";
 const attrs = useAttrs();
 const inputRef = useTemplateRef("input");
-const model = defineModel({ required: true });
+const model = defineModel({ required: true, type: [String, Number, Boolean] });
 const randomId = Math.random().toString(36).slice(2, 9);
 const inputId = attrs.id ? "input-" + attrs.id + randomId : "input-" + randomId;
 
@@ -24,11 +24,11 @@ const clickLabel = () => {
 <template>
   <div class="form-field">
     <input
-      ref="input"
-      type="radio"
       :id="inputId"
-      :value="value"
+      ref="input"
       v-model="model"
+      type="radio"
+      :value="value"
       v-on="$attrs"
     />
     <label :for="inputId" @click="clickLabel">{{ label }}</label>

@@ -1,7 +1,7 @@
-import eslintConfigPrettier from 'eslint-config-prettier';
-import pluginVue from 'eslint-plugin-vue'
 import eslint from '@eslint/js';
-import globals from 'globals'
+import eslintConfigPrettier from 'eslint-config-prettier';
+import pluginVue from 'eslint-plugin-vue';
+import globals from 'globals';
 
 
 export default [
@@ -21,11 +21,7 @@ export default [
         ...globals.browser
       }
     },
-    rules: {
-      'vue/multi-word-component-names': 'off', // Permite nomes de componentes de uma palavra
-      'vue/require-prop-types': 'warn', // Aviso em vez de erro para tipos de props
-      'vue/attributes-order': 'warn', // Aviso em vez de erro para ordem de atributos
-    }
+    rules: {}
   },
   eslintConfigPrettier
 ]

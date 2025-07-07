@@ -1,7 +1,7 @@
 <script setup>
-import Register from "./modules/register/Register.vue";
+import RegisterView from "./modules/register/RegisterView.vue";
 </script>
 
 <template>
-  <Register />
+  <RegisterView />
 </template>

@@ -3,7 +3,7 @@ import { useAttrs, useTemplateRef } from "vue";
 
 const attrs = useAttrs();
 const inputRef = useTemplateRef("input");
-const model = defineModel({ required: true });
+const model = defineModel({ required: true, type: String });
 const randomId = Math.random().toString(36).slice(2, 9);
 const inputId = attrs.id ? "input-" + attrs.id + randomId : "input-" + randomId;
 
@@ -28,10 +28,10 @@ const clickLabel = () => {
       >{{ label }}</label
     >
     <input
-      ref="input"
-      class="form-field__input"
       :id="inputId"
+      ref="input"
       v-model="model"
+      class="form-field__input"
     />
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup>
 import { PersonTypeEnum } from "@/modules/register/types.js";
-import Input from "@/shared/components/Input/Input.vue";
-import Radio from "@/shared/components/Radio/Radio.vue";
+import InputComponent from "@/shared/components/Input/InputComponent.vue";
+import RadioComponent from "@/shared/components/Radio/RadioComponent.vue";
 import { ref } from "vue";
 
 const name = ref("");
@@ -28,9 +28,10 @@ const handleChange = (value) => {
 </script>
 
 <template>
-  <Input id="email" v-model="name" class="register__input" label="Endereço de e-mail" />
+  <InputComponent id="email" v-model="name" class="register__input" label="Endereço de e-mail" />
   <div class="register-person-type">
-    <Radio v-for="option in personTypeOptions" :id="option.id" :key="option.value" v-model="selectedOption"
+    <RadioComponent
+v-for="option in personTypeOptions" :id="option.id" :key="option.value" v-model="selectedOption"
       :value="option.value" :label="option.label" @change="handleChange" />
   </div>
 </template>

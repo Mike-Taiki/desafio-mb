@@ -1,10 +1,10 @@
 <script setup>
 import { PersonTypeEnum, StepsEnum } from "@/modules/register/types.js";
 import SelectPersonType from "@/modules/SelectPersonType/SelectPersonType.vue";
-import Button from "@/shared/components/Button/Button.vue";
-import Heading from "@/shared/components/Heading/Heading.vue";
+import ButtonComponent from "@/shared/components/Button/ButtonComponent.vue";
+import HeadingComponent from "@/shared/components/Heading/HeadingComponent.vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
-import Step from "@/shared/components/Step/Step.vue";
+import StepComponent from "@/shared/components/Step/StepComponent.vue";
 import { ref } from "vue";
 
 const totalSteps = ref(5);
@@ -27,14 +27,14 @@ const selectPersonType = (selectedPersonType) => {
 
 <template>
   <section class="register">
-    <Step class="register__step" :current-step="currentStep" :total-steps="totalSteps" />
-    <Heading class="register__heading" :level="headingOptionsEnum.MD">
+    <StepComponent class="register__step" :current-step="currentStep" :total-steps="totalSteps" />
+    <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
       {{ steps[currentStep] }}
-    </Heading>
+    </HeadingComponent>
     <SelectPersonType @selected-person-type="selectPersonType" />
-    <Button class="register__button" @click="currentStep++">
+    <ButtonComponent class="register__button" @click="currentStep++">
       Continuar
-    </Button>
+    </ButtonComponent>
   </section>
 </template>
 <style lang="scss" scoped>
