@@ -21,12 +21,12 @@ const personTypeOptions = [
 
 const emit = defineEmits(["selectedPersonType"]);
 
-/** @param {Event} value - The selected person radio event.
+/** @param {Event} event - The selected person radio event.
  * This function is called when the radio button selection changes.
  */
-const handleChange = (value) => {
-  selectedOption.value = value;
-  emit("selectedPersonType", value);
+const handleChange = (event) => {
+  selectedOption.value = event.target.value;
+  emit("selectedPersonType", event);
 };
 </script>
 
