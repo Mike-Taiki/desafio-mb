@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from "vue";
-import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
-import { StepsEnum, PersonTypeEnum } from "@/modules/register/types.js";
-import Step from "@/shared/components/Step/Step.vue";
+import { PersonTypeEnum, StepsEnum } from "@/modules/register/types.js";
 import SelectPersonType from "@/modules/SelectPersonType/SelectPersonType.vue";
-import Heading from "@/shared/components/Heading/Heading.vue";
 import Button from "@/shared/components/Button/Button.vue";
+import Heading from "@/shared/components/Heading/Heading.vue";
+import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
+import Step from "@/shared/components/Step/Step.vue";
+import { ref } from "vue";
 
 const totalSteps = ref(5);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
@@ -19,11 +19,7 @@ const steps = {
   [StepsEnum.PASSWORD]: "Senha de acesso",
   [StepsEnum.CONFIRM_DATA]: "Revise suas informações",
 };
-/**
- * Selects the person.
- * @param {PersonTypeEnum} selectedPersonType - The selected person type.
- * @type {function}
- **/
+/**  * Selects the person.  * @param {PersonTypeEnum} selectedPersonType - The selected person type.  * @type {function}  **/
 const selectPersonType = (selectedPersonType) => {
   selectedPersonType.value = selectedPersonType;
 };
@@ -31,24 +27,12 @@ const selectPersonType = (selectedPersonType) => {
 
 <template>
   <section class="register">
-    <Step
-      class="register__step"
-      :current-step="currentStep"
-      :total-steps="totalSteps"
-    />
-    <Heading
-      class="register__heading"
-      :level="headingOptionsEnum.MD"
-    >
-      {{
-        steps[currentStep]
-      }}
+    <Step class="register__step" :current-step="currentStep" :total-steps="totalSteps" />
+    <Heading class="register__heading" :level="headingOptionsEnum.MD">
+      {{ steps[currentStep] }}
     </Heading>
     <SelectPersonType @selected-person-type="selectPersonType" />
-    <Button
-      class="register__button"
-      @click="currentStep++"
-    >
+    <Button class="register__button" @click="currentStep++">
       Continuar
     </Button>
   </section>
