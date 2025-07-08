@@ -22,7 +22,7 @@ const classes = computed(() => {
 .button {
   padding: $padding-1;
   border-radius: $radius-1;
-  border: $border-orange;
+  border: $border-orange-1;
 
   &__primary {
     background-color: $bg-orange;

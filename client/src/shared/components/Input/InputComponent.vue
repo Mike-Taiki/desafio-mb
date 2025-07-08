@@ -52,7 +52,7 @@ const clickLabel = () => {
 
   &__input {
     width: 100%;
-    border: $border-black;
+    border: $border-black-1;
     border-radius: $radius-1;
     padding: $padding-1;
     box-sizing: border-box;
