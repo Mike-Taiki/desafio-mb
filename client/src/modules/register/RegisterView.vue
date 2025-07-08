@@ -108,7 +108,7 @@ function setIsNextButtonDisabled(isValid) {
       {{ steps[currentStep].title }}
     </HeadingComponent>
     <SelectPersonType @selected-person-type="selectPersonType" @input-email="inputEmail" />
-    <ButtonComponent class="register__button" :disabled="steps[currentStep].isButtonDisabled">
+    <ButtonComponent class="register__button" :disabled="steps[currentStep].isButtonDisabled" @click="currentStep++">
       Continuar
     </ButtonComponent>
   </section>
