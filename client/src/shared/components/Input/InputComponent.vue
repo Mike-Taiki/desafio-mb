@@ -8,7 +8,7 @@ const model = defineModel({ required: true, type: String });
 const randomId = Math.random().toString(36).slice(2, 9);
 const inputId = attrs.id ? "input-" + attrs.id + randomId : "input-" + randomId;
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: "",
@@ -21,6 +21,7 @@ defineProps({
       if (!validTypes.includes(value)) {
         throw new Error(`Invalid input type: ${value}. Valid types are: ${validTypes.join(", ")}`);
       }
+      return true;
     },
   }
 });
@@ -42,6 +43,7 @@ const clickLabel = () => {
       :id="inputId"
       ref="input"
       v-model="model"
+      :type="props.type"
       class="form-field__input"
     />
   </div>

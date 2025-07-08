@@ -39,7 +39,7 @@ const handleInputEmail = (event) => {
   <InputComponent 
     id="email" 
     v-model="email" 
-    :type="'email'" 
+    type="email" 
     class="register__input" 
     label="Endereço de e-mail" 
     @keyup="handleInputEmail"
