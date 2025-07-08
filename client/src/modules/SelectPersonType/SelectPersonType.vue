@@ -47,7 +47,6 @@ const handleInputEmail = (event) => {
   <div class="register-person-type">
     <RadioComponent
       v-for="option in personTypeOptions" 
-      :id="option.id" 
       :key="option.value" 
       v-model="selectedOption"
       :value="option.value" 
