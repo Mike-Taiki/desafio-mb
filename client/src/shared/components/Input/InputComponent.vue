@@ -53,6 +53,7 @@ const clickLabel = () => {
   flex-wrap: wrap;
   width: 100%;
   max-width: 100%;
+  cursor: pointer;
 
   &__label {
     width: 100%;

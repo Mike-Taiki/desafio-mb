@@ -33,5 +33,9 @@ const classes = computed(() => {
     background-color: $bg-white;
     color: $text-orange;
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 </style>

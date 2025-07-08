@@ -4,7 +4,7 @@ import InputComponent from "@/shared/components/Input/InputComponent.vue";
 import RadioComponent from "@/shared/components/Radio/RadioComponent.vue";
 import { ref } from "vue";
 
-const name = ref("");
+const email = ref("");
 const selectedOption = ref("");
 const personTypeOptions = [
   {
@@ -19,23 +19,40 @@ const personTypeOptions = [
   },
 ];
 
-const emit = defineEmits(["selectedPersonType"]);
+const emit = defineEmits(["selectedPersonType", "inputEmail"]);
 
 /** @param {Event} event - The selected person radio event.
  * This function is called when the radio button selection changes.
  */
-const handleChange = (event) => {
+const handleSelectPersonChange = (event) => {
   selectedOption.value = event.target.value;
   emit("selectedPersonType", event);
+};
+
+const handleInputEmail = (event) => {
+  email.value = event.target.value;
+  emit("inputEmail", email.value);
 };
 </script>
 
 <template>
-  <InputComponent id="email" v-model="name" class="register__input" label="Endereço de e-mail" />
+  <InputComponent 
+    id="email" 
+    v-model="email" 
+    :type="'email'" 
+    class="register__input" 
+    label="Endereço de e-mail" 
+    @keyup="handleInputEmail"
+  />
   <div class="register-person-type">
     <RadioComponent
-v-for="option in personTypeOptions" :id="option.id" :key="option.value" v-model="selectedOption"
-      :value="option.value" :label="option.label" @change="handleChange" />
+      v-for="option in personTypeOptions" 
+      :id="option.id" 
+      :key="option.value" 
+      v-model="selectedOption"
+      :value="option.value" 
+      :label="option.label" 
+      @change="handleSelectPersonChange" />
   </div>
 </template>
 <style lang="scss" scoped>
