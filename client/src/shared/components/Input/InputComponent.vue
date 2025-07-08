@@ -1,5 +1,6 @@
 <script setup>
 import { useAttrs, useTemplateRef } from "vue";
+import { InputTypesEnum } from "./types";
 
 const attrs = useAttrs();
 const inputRef = useTemplateRef("input");
@@ -12,6 +13,16 @@ defineProps({
     type: String,
     default: "",
   },
+  type: {
+    type: String,
+    default: InputTypesEnum.TEXT,
+    validator: (value) => {
+      const validTypes = Object.values(InputTypesEnum);
+      if (!validTypes.includes(value)) {
+        throw new Error(`Invalid input type: ${value}. Valid types are: ${validTypes.join(", ")}`);
+      }
+    },
+  }
 });
 
 const clickLabel = () => {
