@@ -34,19 +34,23 @@ const steps = ref({
     title: () => "Seja bem vindo(a)",
     email: "",
     selectedPersonType: null,
-    isValid: isFirstStepValid
+    isValid: isFirstStepValid,
+    hasBackButton: false,
   },
   [StepsEnum.INSERT_DATA]: {
     title: () => isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
-    isValid: true,
+    isValid: false,
+    hasBackButton: true,
   },
   [StepsEnum.PASSWORD]: {
     title: () => "Senha de acesso",
-    isValid: true,
+    isValid: false,
+    hasBackButton: true,
   },
   [StepsEnum.CONFIRM_DATA]: {
     title: () => "Revise suas informações",
-    isValid: true,
+    isValid: false,
+    hasBackButton: false,
   }
 });
 
@@ -87,7 +91,7 @@ function goBack() {
     <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
     <PhysicalPerson v-else-if="currentStep === 2" />
     <div class="register-buttons">
-      <ButtonComponent class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
+      <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
         Voltar
       </ButtonComponent>
       <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">

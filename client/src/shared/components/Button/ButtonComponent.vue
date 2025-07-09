@@ -23,6 +23,7 @@ const classes = computed(() => {
   padding: $padding-1;
   border-radius: $radius-1;
   border: $border-orange-1;
+  cursor: pointer;
 
   &__primary {
     background-color: $bg-orange;
