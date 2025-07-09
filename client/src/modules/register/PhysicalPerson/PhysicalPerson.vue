@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import InputComponent from "@/shared/components/Input/InputComponent.vue";
+import { maskCpf } from "@/shared/helpers/maskCpf.js";
+import { maskTelephone } from "@/shared/helpers/maskTel.js";
 import { defineEmits, defineProps, ref } from "vue";
 const props = defineProps({
   name: {
@@ -30,29 +32,17 @@ const handleInputName = (event) => {
 };
 
 const handleInputCpf = (event) => {
-  emit("inputCpf", event.target.value);
+  typedCpf.value = maskCpf(event.target.value);
 };
 
 const handleInputBirthdate = (event) => {
-  const birthdate = event.target.value;
-  // Validate birthdate format (DD/MM/YYYY)
-  const birthdateRegex = /^(0[1-9]|[12][0-9])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
-  if (birthdateRegex.test(birthdate)) {
-    emit("inputBirthDate", birthdate);
-  } else {
-    console.error("Invalid birthdate format. Please use DD/MM/YYYY.");
-  }
+  emit("inputBirthDate", event.target.value);
 }
 
 const handleInputTelephone = (event) => {
   const telephoneValue = event.target.value;
-  // Validate telephone format (Brazilian format)
-  const telephoneRegex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
-  if (telephoneRegex.test(telephoneValue)) {
-    emit("inputTelephone", telephoneValue);
-  } else {
-    console.error("Invalid telephone format. Please use (XX) XXXX-XXXX or (XX) XXXXX-XXXX.");
-  }
+  typedTelephone.value = maskTelephone(telephoneValue);
+  emit("inputTelephone", telephoneValue);
 };
 </script>
 <template>
@@ -66,6 +56,7 @@ const handleInputTelephone = (event) => {
     v-model="typedCpf"
     class="register__input" 
     label="CPF" 
+    :maxlength="14"
     @keyup="handleInputCpf"
   />
   <InputComponent 
@@ -80,6 +71,7 @@ const handleInputTelephone = (event) => {
     class="register__input" 
     label="Telefone" 
     type="tel"  
+    :maxlength="13"
     @keyup="handleInputTelephone"
   />
 </template>

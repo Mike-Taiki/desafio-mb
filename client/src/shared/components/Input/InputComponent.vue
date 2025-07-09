@@ -44,6 +44,7 @@ const clickLabel = () => {
       ref="input"
       v-model="model"
       :type="props.type"
+      :maxlength="attrs.maxlength"
       class="form-field__input"
     />
   </div>
