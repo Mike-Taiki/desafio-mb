@@ -67,9 +67,6 @@ function inputEmail(email) {
  * @description Determines if the selected person type is a physical person.
  */
 function isPhysicalPerson() {
-  console.log("selectedPersonType", steps.value[StepsEnum.PERSON_TYPE].selectedPersonType);
-  console.log("physical", PersonTypeEnum.PHYSICAL);
-  console.log("isPhysicalPerson", steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL);
   return steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL;
 };
 
