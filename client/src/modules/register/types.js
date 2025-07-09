@@ -6,6 +6,6 @@ export const StepsEnum = {
 };
 
 export const PersonTypeEnum = {
-  PHYSICAL: 0,
-  LEGAL: 1,
+  PHYSICAL: 1,
+  LEGAL: 2,
 };

@@ -20,15 +20,15 @@ const personTypeOptions = [
 const props = defineProps({
   email: {
     type: String,
-    default: "",
+    required: true,
   },
   selectedPerson: {
     type: Number,
-    default: undefined,
+    required: true,
   }
 });
 const typedEmail = ref(props.email);
-const selectedOption = ref(props.selectedPerson || "");
+const selectedOption = ref(props.selectedPerson);
 
 const emit = defineEmits(["selectedPersonType", "inputEmail"]);
 

@@ -43,7 +43,7 @@ const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
     title: () => "Seja bem vindo(a)",
     email: "",
-    selectedPersonType: null,
+    selectedPersonType: 0, // Default to no selection
     isValid: isFirstStepValid,
     hasBackButton: false,
   },
