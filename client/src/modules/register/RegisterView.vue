@@ -7,6 +7,7 @@ import HeadingComponent from "@/shared/components/Heading/HeadingComponent.vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
 import StepComponent from "@/shared/components/Step/StepComponent.vue";
 import { computed, ref } from "vue";
+import PasswordSelection from './Password/PasswordSelection.vue';
 
 const totalSteps = ref(5);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
@@ -58,6 +59,7 @@ const steps = ref({
   },
   [StepsEnum.PASSWORD]: {
     title: () => "Senha de acesso",
+    password: "",
     isValid: false,
     hasBackButton: true,
   },
@@ -109,6 +111,10 @@ function handleInputPhysicalPersonTelephone(telephone) {
   steps.value[StepsEnum.INSERT_DATA].telephone = telephone;
 };
 
+function handleInputPassword(password) {
+  steps.value[StepsEnum.PASSWORD].password = password;
+};
+
 </script>
 
 <template>
@@ -128,6 +134,11 @@ function handleInputPhysicalPersonTelephone(telephone) {
       @input-cpf="handleInputPhysicalPersonCpf"
       @input-birth-date="handleInputPhysicalPersonBirthdate"
       @input-telephone="handleInputPhysicalPersonTelephone"/>
+    <PasswordSelection 
+      v-else-if="currentStep === 3"
+      :password="steps[StepsEnum.PASSWORD].password"
+      @input-password="handleInputPassword" 
+    />
     <div class="register-buttons">
       <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
         Voltar
