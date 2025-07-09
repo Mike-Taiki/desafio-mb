@@ -10,27 +10,26 @@ import { ref } from "vue";
 
 const totalSteps = ref(5);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
-const selectedPersonType = ref(null);
 const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
-    title: "Seja bem vindo(a)",
+    title: () => "Seja bem vindo(a)",
     email: "",
-    selectedPersonType: selectedPersonType.value,
+    selectedPersonType: null,
     validationNextCallback: handleFirstStepValidation,
     isButtonDisabled: true
   },
   [StepsEnum.INSERT_DATA]: {
-    title: isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
+    title: () => isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
     validationNextCallback: validateEmail,
     isButtonDisabled: true,
   },
   [StepsEnum.PASSWORD]: {
-    title: "Senha de acesso",
+    title: () => "Senha de acesso",
     validationNextCallback: validateEmail,
     isButtonDisabled: true,
   },
   [StepsEnum.CONFIRM_DATA]: {
-    title: "Revise suas informações",
+    title: () => "Revise suas informações",
     validationNextCallback: validateEmail,
     isButtonDisabled: true,
   }
@@ -55,7 +54,10 @@ function inputEmail(email) {
  * @description Determines if the selected person type is a physical person.
  */
 function isPhysicalPerson() {
-  return selectedPersonType.value === PersonTypeEnum.PHYSICAL;
+  console.log("selectedPersonType", steps.value[StepsEnum.PERSON_TYPE].selectedPersonType);
+  console.log("physical", PersonTypeEnum.PHYSICAL);
+  console.log("isPhysicalPerson", steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL);
+  return steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL;
 };
 
 /**
@@ -106,7 +108,7 @@ function setIsNextButtonDisabled(isValid) {
   <section class="register">
     <StepComponent class="register__step" :current-step="currentStep" :total-steps="totalSteps" />
     <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
-      {{ steps[currentStep].title }}
+      {{ steps[currentStep].title() }}
     </HeadingComponent>
     <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
     <PhysicalPerson v-else-if="currentStep === 2" />

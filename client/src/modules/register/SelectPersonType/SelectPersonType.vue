@@ -26,7 +26,7 @@ const emit = defineEmits(["selectedPersonType", "inputEmail"]);
  */
 const handleSelectPersonChange = (event) => {
   selectedOption.value = event.target.value;
-  emit("selectedPersonType", event);
+  emit("selectedPersonType", parseInt(event.target.value));
 };
 
 const handleInputEmail = (event) => {
