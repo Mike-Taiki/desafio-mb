@@ -6,45 +6,58 @@ import ButtonComponent from "@/shared/components/Button/ButtonComponent.vue";
 import HeadingComponent from "@/shared/components/Heading/HeadingComponent.vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
 import StepComponent from "@/shared/components/Step/StepComponent.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const totalSteps = ref(5);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
+
+/**
+ * 
+ * @param email - The email to validate.
+ * @returns {boolean} - Returns true if the email is valid, otherwise false.
+ * @type {function}
+ * @description Validates the email format using a regular expression.
+ */
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const isFirstStepValid = computed(() => {
+  const isEmailValid = validateEmail(steps.value[currentStep.value].email);
+  const isPersonTypeSelected = steps.value[currentStep.value].selectedPersonType !== null;
+  return isEmailValid && isPersonTypeSelected;
+})
+
 const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
     title: () => "Seja bem vindo(a)",
     email: "",
     selectedPersonType: null,
-    validationNextCallback: handleFirstStepValidation,
-    isButtonDisabled: true
+    isValid: isFirstStepValid
   },
   [StepsEnum.INSERT_DATA]: {
     title: () => isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
-    validationNextCallback: validateEmail,
-    isButtonDisabled: true,
+    isValid: true,
   },
   [StepsEnum.PASSWORD]: {
     title: () => "Senha de acesso",
-    validationNextCallback: validateEmail,
-    isButtonDisabled: true,
+    isValid: true,
   },
   [StepsEnum.CONFIRM_DATA]: {
     title: () => "Revise suas informações",
-    validationNextCallback: validateEmail,
-    isButtonDisabled: true,
+    isValid: true,
   }
 });
 
 /**  * Selects the person.  * @param {PersonTypeEnum} selectedPersonType - The selected person type.  * @type {function}  **/
 function selectPersonType(selectedPersonType) {
   steps.value[currentStep.value].selectedPersonType = selectedPersonType;
-  handleNextStep();
 };
 
 
 function inputEmail(email) {
   steps.value[currentStep.value].email = email;
-  handleNextStep();
 };
 
 /**
@@ -60,48 +73,6 @@ function isPhysicalPerson() {
   return steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL;
 };
 
-/**
- * 
- * @param email - The email to validate.
- * @returns {boolean} - Returns true if the email is valid, otherwise false.
- * @type {function}
- * @description Validates the email format using a regular expression.
- */
-function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
-
-/**
- * @param {Event} event - The current step number.
- * @description Handles the next step in the registration process.
- */
-function handleNextStep() {
-  const isValid = steps.value[currentStep.value].validationNextCallback();
-  if (isValid) {
-    setIsNextButtonDisabled(false);
-  } else {
-    setIsNextButtonDisabled(true);
-  }
-}
-
-function handleFirstStepValidation() {
-  const isEmailValid = validateEmail(steps.value[currentStep.value].email);
-  const isPersonTypeSelected = steps.value[currentStep.value].selectedPersonType !== null;
-  if (isEmailValid && isPersonTypeSelected) {
-    return true;
-  }
-  return false;
-}
-
-/**
- * 
- * @param {boolean} isValid - Indicates whether the current step is valid.
- * @description Toggles the disabled state of the button based on the validity of the current step
- */
-function setIsNextButtonDisabled(isValid) {
-  steps.value[currentStep.value].isButtonDisabled = isValid;
-}
 </script>
 
 <template>
@@ -112,7 +83,7 @@ function setIsNextButtonDisabled(isValid) {
     </HeadingComponent>
     <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
     <PhysicalPerson v-else-if="currentStep === 2" />
-    <ButtonComponent class="register__button" :disabled="steps[currentStep].isButtonDisabled" @click="currentStep++">
+    <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">
       Continuar
     </ButtonComponent>
   </section>
