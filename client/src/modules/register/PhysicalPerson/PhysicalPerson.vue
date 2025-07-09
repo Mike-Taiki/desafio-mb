@@ -1,37 +1,44 @@
 <script setup lang="ts">
 import InputComponent from "@/shared/components/Input/InputComponent.vue";
-import { ref } from "vue";
-const name = ref("");
-const cpf = ref("");
-const birthDate = ref("");
-const telephone = ref("");
-const emit = defineEmits(["inputName", "inputCpf", "inputBirthdate", "inputTelephone"]);
+import { defineEmits, defineProps, ref } from "vue";
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  cpf: {
+    type: String,
+    required: true
+  },
+  birthDate: {
+    type: String,
+    required: true
+  },
+  telephone: {
+    type: String,
+    required: true
+  }
+});
+const typedName = ref(props.name);
+const typedCpf = ref(props.cpf);
+const typedBirthDate = ref(props.birthDate);
+const typedTelephone = ref(props.telephone);
+const emit = defineEmits(["inputName", "inputCpf", "inputBirthDate", "inputTelephone"]);
 
-/** @param {Event} event - The input name event.
- *  @description This function is called when the name input changes.
- */
 const handleInputName = (event) => {
-  name.value = event.target.value;
-  emit("inputName", name.value);
+  emit("inputName", event.target.value);
 };
 
-/** @param {Event} event - The input cpf event.
- *  @description This function is called when the cpf input changes.
- */
 const handleInputCpf = (event) => {
-  cpf.value = event.target.value;
-  emit("inputCpf", cpf.value);
+  emit("inputCpf", event.target.value);
 };
 
-/** @param {Event} event - The input birthdate event.
- *  @description This function is called when the birthdate input changes.
- */
 const handleInputBirthdate = (event) => {
   const birthdate = event.target.value;
   // Validate birthdate format (DD/MM/YYYY)
   const birthdateRegex = /^(0[1-9]|[12][0-9])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
   if (birthdateRegex.test(birthdate)) {
-    emit("inputBirthdate", birthdate);
+    emit("inputBirthDate", birthdate);
   } else {
     console.error("Invalid birthdate format. Please use DD/MM/YYYY.");
   }
@@ -50,26 +57,26 @@ const handleInputTelephone = (event) => {
 </script>
 <template>
   <InputComponent 
-    v-model="name"
+    v-model="typedName"
     class="register__input" 
     label="Nome" 
     @keyup="handleInputName"
   />
   <InputComponent 
-    v-model="cpf"
+    v-model="typedCpf"
     class="register__input" 
     label="CPF" 
     @keyup="handleInputCpf"
   />
   <InputComponent 
-    v-model="birthDate"
+    v-model="typedBirthDate"
     type="date"
     class="register__input" 
     label="Data de nascimento" 
     @keyup="handleInputBirthdate"
   />
   <InputComponent 
-  v-model="telephone"
+  v-model="typedTelephone"
     class="register__input" 
     label="Telefone" 
     type="tel"  

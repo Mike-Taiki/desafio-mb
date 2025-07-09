@@ -39,6 +39,10 @@ const steps = ref({
   },
   [StepsEnum.INSERT_DATA]: {
     title: () => isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
+    name: "",
+    cpf: "",
+    birthDate: "",
+    telephone: "",
     isValid: false,
     hasBackButton: true,
   },
@@ -79,6 +83,22 @@ function goBack() {
   }
 };
 
+function handleInputPhysicalPersonName(name) {
+  steps.value[StepsEnum.INSERT_DATA].name = name;
+};
+
+function handleInputPhysicalPersonCpf(cpf) {
+  steps.value[StepsEnum.INSERT_DATA].cpf = cpf;
+};
+
+function handleInputPhysicalPersonBirthdate(birthDate) {
+  steps.value[StepsEnum.INSERT_DATA].birthDate = birthDate;
+};
+
+function handleInputPhysicalPersonTelephone(telephone) {
+  steps.value[StepsEnum.INSERT_DATA].telephone = telephone;
+};
+
 </script>
 
 <template>
@@ -88,7 +108,16 @@ function goBack() {
       {{ steps[currentStep].title() }}
     </HeadingComponent>
     <SelectPersonType v-if="currentStep === 1" :selected-person="steps[currentStep].selectedPersonType" :email="steps[currentStep].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
-    <PhysicalPerson v-else-if="currentStep === 2" />
+    <PhysicalPerson 
+      v-else-if="currentStep === 2" 
+      :name="steps[StepsEnum.INSERT_DATA].name" 
+      :cpf="steps[StepsEnum.INSERT_DATA].cpf" 
+      :birth-date="steps[StepsEnum.INSERT_DATA].birthDate" 
+      :telephone="steps[StepsEnum.INSERT_DATA].telephone" 
+      @input-name="handleInputPhysicalPersonName"
+      @input-cpf="handleInputPhysicalPersonCpf"
+      @input-birth-date="handleInputPhysicalPersonBirthdate"
+      @input-telephone="handleInputPhysicalPersonTelephone"/>
     <div class="register-buttons">
       <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
         Voltar

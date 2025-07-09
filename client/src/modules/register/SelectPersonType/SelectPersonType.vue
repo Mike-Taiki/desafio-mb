@@ -36,13 +36,11 @@ const emit = defineEmits(["selectedPersonType", "inputEmail"]);
  * @description This function is called when the radio button selection changes.
  */
 const handleSelectPersonChange = (event) => {
-  selectedOption.value = event.target.value;
   emit("selectedPersonType", parseInt(event.target.value));
 };
 
 const handleInputEmail = (event) => {
-  typedEmail.value = event.target.value;
-  emit("inputEmail", typedEmail.value);
+  emit("inputEmail", event.target.value);
 };
 </script>
 
