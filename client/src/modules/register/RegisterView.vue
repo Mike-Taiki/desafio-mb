@@ -29,6 +29,16 @@ const isFirstStepValid = computed(() => {
   return isEmailValid && isPersonTypeSelected;
 })
 
+
+const isSecondStepValid = computed(() => {
+  const stepData = steps.value[StepsEnum.INSERT_DATA];
+  if (isPhysicalPerson()) {
+    return stepData.name && stepData.cpf && stepData.birthDate && stepData.telephone;
+  }
+  // Add validation for legal person if needed
+  return false; // Placeholder for legal person validation
+});
+
 const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
     title: () => "Seja bem vindo(a)",
@@ -43,7 +53,7 @@ const steps = ref({
     cpf: "",
     birthDate: "",
     telephone: "",
-    isValid: false,
+    isValid: isSecondStepValid,
     hasBackButton: true,
   },
   [StepsEnum.PASSWORD]: {

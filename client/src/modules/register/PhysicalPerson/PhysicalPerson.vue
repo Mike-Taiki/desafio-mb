@@ -33,6 +33,7 @@ const handleInputName = (event) => {
 
 const handleInputCpf = (event) => {
   typedCpf.value = maskCpf(event.target.value);
+  emit("inputCpf", typedCpf.value);
 };
 
 const handleInputBirthdate = (event) => {
@@ -42,7 +43,7 @@ const handleInputBirthdate = (event) => {
 const handleInputTelephone = (event) => {
   const telephoneValue = event.target.value;
   typedTelephone.value = maskTelephone(telephoneValue);
-  emit("inputTelephone", telephoneValue);
+  emit("inputTelephone", typedTelephone.value);
 };
 </script>
 <template>
