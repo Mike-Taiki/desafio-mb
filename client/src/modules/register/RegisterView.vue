@@ -1,6 +1,7 @@
 <script setup>
+import PhysicalPerson from "@/modules/register/PhysicalPerson/PhysicalPerson.vue";
+import SelectPersonType from "@/modules/register/SelectPersonType/SelectPersonType.vue";
 import { PersonTypeEnum, StepsEnum } from "@/modules/register/types.js";
-import SelectPersonType from "@/modules/SelectPersonType/SelectPersonType.vue";
 import ButtonComponent from "@/shared/components/Button/ButtonComponent.vue";
 import HeadingComponent from "@/shared/components/Heading/HeadingComponent.vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
@@ -16,7 +17,7 @@ const steps = ref({
     email: "",
     selectedPersonType: selectedPersonType.value,
     validationNextCallback: handleFirstStepValidation,
-    isButtonDisabled: true,
+    isButtonDisabled: true
   },
   [StepsEnum.INSERT_DATA]: {
     title: isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
@@ -107,7 +108,8 @@ function setIsNextButtonDisabled(isValid) {
     <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
       {{ steps[currentStep].title }}
     </HeadingComponent>
-    <SelectPersonType @selected-person-type="selectPersonType" @input-email="inputEmail" />
+    <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
+    <PhysicalPerson v-else-if="currentStep === 2" />
     <ButtonComponent class="register__button" :disabled="steps[currentStep].isButtonDisabled" @click="currentStep++">
       Continuar
     </ButtonComponent>
