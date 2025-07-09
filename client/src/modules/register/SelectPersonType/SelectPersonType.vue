@@ -22,7 +22,7 @@ const personTypeOptions = [
 const emit = defineEmits(["selectedPersonType", "inputEmail"]);
 
 /** @param {Event} event - The selected person radio event.
- * This function is called when the radio button selection changes.
+ * @description This function is called when the radio button selection changes.
  */
 const handleSelectPersonChange = (event) => {
   selectedOption.value = event.target.value;
@@ -63,7 +63,6 @@ const handleInputEmail = (event) => {
   &-person-type {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: $margin-3;
 
     &> :nth-child(n + 1) {
       margin-right: $margin-3;

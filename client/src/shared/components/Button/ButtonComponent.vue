@@ -3,14 +3,14 @@ import { computed } from "vue";
 import { ButtonTypesEnum } from "./types.js";
 
 const props = defineProps({
-  style: {
+  styleType: {
     type: String,
     default: ButtonTypesEnum.PRIMARY,
   },
 });
 
 const classes = computed(() => {
-  return ["button", `button__${props.style}`];
+  return ["button", `button__${props.styleType}`];
 });
 </script>
 <template>

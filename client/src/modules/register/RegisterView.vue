@@ -70,6 +70,12 @@ function isPhysicalPerson() {
   return steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL;
 };
 
+function goBack() {
+  if (currentStep.value > 1) {
+    currentStep.value--;
+  }
+};
+
 </script>
 
 <template>
@@ -80,9 +86,14 @@ function isPhysicalPerson() {
     </HeadingComponent>
     <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
     <PhysicalPerson v-else-if="currentStep === 2" />
-    <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">
-      Continuar
-    </ButtonComponent>
+    <div class="register-buttons">
+      <ButtonComponent class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
+        Voltar
+      </ButtonComponent>
+      <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">
+        Continuar
+      </ButtonComponent>
+    </div>
   </section>
 </template>
 <style lang="scss" scoped>
@@ -98,6 +109,16 @@ function isPhysicalPerson() {
 
   &__heading {
     margin-bottom: $margin-6;
+  }
+
+  &-buttons {
+    display: flex;
+    gap: $margin-3;
+  }
+
+  &__button {
+    margin-top: $margin-3;
+    flex: 1;
   }
 }
 </style>
