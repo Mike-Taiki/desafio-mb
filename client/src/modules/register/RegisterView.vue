@@ -13,7 +13,7 @@ const currentStep = ref(StepsEnum.PERSON_TYPE);
 
 /**
  * 
- * @param email - The email to validate.
+ * @param {string} email - The email to validate.
  * @returns {boolean} - Returns true if the email is valid, otherwise false.
  * @type {function}
  * @description Validates the email format using a regular expression.
@@ -54,16 +54,6 @@ const steps = ref({
   }
 });
 
-/**  * Selects the person.  * @param {PersonTypeEnum} selectedPersonType - The selected person type.  * @type {function}  **/
-function selectPersonType(selectedPersonType) {
-  steps.value[currentStep.value].selectedPersonType = selectedPersonType;
-};
-
-
-function inputEmail(email) {
-  steps.value[currentStep.value].email = email;
-};
-
 /**
  * Checks if the selected person type is a physical person.
  * @returns {boolean} - Returns true if the selected person type is physical, otherwise false.
@@ -72,6 +62,15 @@ function inputEmail(email) {
  */
 function isPhysicalPerson() {
   return steps.value[StepsEnum.PERSON_TYPE].selectedPersonType === PersonTypeEnum.PHYSICAL;
+};
+
+
+function handleSelectedPersonType(selectedPersonType) {
+  steps.value[StepsEnum.PERSON_TYPE].selectedPersonType = selectedPersonType;
+};
+
+function handleInputEmail(email) {
+  steps.value[StepsEnum.PERSON_TYPE].email = email;
 };
 
 function goBack() {
@@ -88,7 +87,7 @@ function goBack() {
     <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
       {{ steps[currentStep].title() }}
     </HeadingComponent>
-    <SelectPersonType v-if="currentStep === 1" @selected-person-type="selectPersonType" @input-email="inputEmail" />
+    <SelectPersonType v-if="currentStep === 1" :selected-person="steps[currentStep].selectedPersonType" :email="steps[currentStep].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
     <PhysicalPerson v-else-if="currentStep === 2" />
     <div class="register-buttons">
       <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">

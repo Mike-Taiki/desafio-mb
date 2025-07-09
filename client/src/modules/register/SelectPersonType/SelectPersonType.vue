@@ -4,8 +4,6 @@ import InputComponent from "@/shared/components/Input/InputComponent.vue";
 import RadioComponent from "@/shared/components/Radio/RadioComponent.vue";
 import { ref } from "vue";
 
-const email = ref("");
-const selectedOption = ref("");
 const personTypeOptions = [
   {
     value: PersonTypeEnum.PHYSICAL,
@@ -19,6 +17,19 @@ const personTypeOptions = [
   },
 ];
 
+const props = defineProps({
+  email: {
+    type: String,
+    default: "",
+  },
+  selectedPerson: {
+    type: Number,
+    default: undefined,
+  }
+});
+const typedEmail = ref(props.email);
+const selectedOption = ref(props.selectedPerson || "");
+
 const emit = defineEmits(["selectedPersonType", "inputEmail"]);
 
 /** @param {Event} event - The selected person radio event.
@@ -30,15 +41,15 @@ const handleSelectPersonChange = (event) => {
 };
 
 const handleInputEmail = (event) => {
-  email.value = event.target.value;
-  emit("inputEmail", email.value);
+  typedEmail.value = event.target.value;
+  emit("inputEmail", typedEmail.value);
 };
 </script>
 
 <template>
   <InputComponent 
     id="email" 
-    v-model="email" 
+    v-model="typedEmail" 
     type="email" 
     class="register__input" 
     label="Endereço de e-mail" 
