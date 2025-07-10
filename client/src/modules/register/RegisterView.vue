@@ -40,6 +40,10 @@ const isSecondStepValid = computed(() => {
   return false; // Placeholder for legal person validation
 });
 
+const isThirdStepValid = computed(() => {
+  return steps.value[StepsEnum.PASSWORD].password.length >= 6;
+});
+
 const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
     title: () => "Seja bem vindo(a)",
@@ -60,13 +64,13 @@ const steps = ref({
   [StepsEnum.PASSWORD]: {
     title: () => "Senha de acesso",
     password: "",
-    isValid: false,
+    isValid: isThirdStepValid,
     hasBackButton: true,
   },
   [StepsEnum.CONFIRM_DATA]: {
     title: () => "Revise suas informações",
     isValid: false,
-    hasBackButton: false,
+    hasBackButton: true,
   }
 });
 
