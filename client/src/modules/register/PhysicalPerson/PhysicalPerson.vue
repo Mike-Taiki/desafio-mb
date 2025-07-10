@@ -19,13 +19,22 @@ const props = defineProps({
   telephone: {
     type: String,
     required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  hasInputPassword: {
+    type: Boolean,
+    default: false
   }
 });
 const typedName = ref(props.name);
 const typedCpf = ref(props.cpf);
 const typedBirthDate = ref(props.birthDate);
 const typedTelephone = ref(props.telephone);
-const emit = defineEmits(["inputName", "inputCpf", "inputBirthDate", "inputTelephone"]);
+const typedPassword = ref(props.password);
+const emit = defineEmits(["inputName", "inputCpf", "inputBirthDate", "inputTelephone", "inputPassword"]);
 
 const handleInputName = (event) => {
   emit("inputName", event.target.value);
@@ -44,6 +53,10 @@ const handleInputTelephone = (event) => {
   const telephoneValue = event.target.value;
   typedTelephone.value = maskTelephone(telephoneValue);
   emit("inputTelephone", typedTelephone.value);
+};
+
+const handleInputPassword = (event) => {
+  emit("inputPassword", event.target.value);
 };
 </script>
 <template>
@@ -74,6 +87,15 @@ const handleInputTelephone = (event) => {
     type="tel"  
     :maxlength="13"
     @keyup="handleInputTelephone"
+  />
+  <InputComponent 
+  v-if="hasInputPassword"
+  v-model="typedPassword"
+    class="register__input" 
+    label="Senha" 
+    type="password"  
+    :maxlength="6"
+    @keyup="handleInputPassword"
   />
 </template>
 <style lang="scss" scoped>

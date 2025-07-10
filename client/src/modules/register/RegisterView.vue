@@ -44,6 +44,11 @@ const isThirdStepValid = computed(() => {
   return steps.value[StepsEnum.PASSWORD].password.length >= 6;
 });
 
+const isFourthStepValid = computed(() => {
+  const isPasswordValid = isThirdStepValid.value;
+  return isPasswordValid && isSecondStepValid.value;
+});
+
 const steps = ref({
   [StepsEnum.PERSON_TYPE]: {
     title: () => "Seja bem vindo(a)",
@@ -74,7 +79,7 @@ const steps = ref({
   },
   [StepsEnum.CONFIRMATION]: {
     title: () => "Revise suas informações",
-    isValid: isSecondStepValid,
+    isValid: isFourthStepValid,
     hasBackButton: true,
     backButtonLabel: "Voltar",
     nextButtonLabel: "Cadastrar"
@@ -140,11 +145,15 @@ function handleInputPassword(password) {
       :name="steps[StepsEnum.INSERT_DATA].name" 
       :cpf="steps[StepsEnum.INSERT_DATA].cpf" 
       :birth-date="steps[StepsEnum.INSERT_DATA].birthDate" 
-      :telephone="steps[StepsEnum.INSERT_DATA].telephone" 
+      :telephone="steps[StepsEnum.INSERT_DATA].telephone"
+      :password="steps[StepsEnum.PASSWORD].password"
+      :has-input-password="currentStep === 4"
       @input-name="handleInputPhysicalPersonName"
       @input-cpf="handleInputPhysicalPersonCpf"
       @input-birth-date="handleInputPhysicalPersonBirthdate"
-      @input-telephone="handleInputPhysicalPersonTelephone"/>
+      @input-telephone="handleInputPhysicalPersonTelephone"
+      @input-password="handleInputPassword"
+      />
     <PasswordSelection 
       v-else-if="currentStep === 3"
       :password="steps[StepsEnum.PASSWORD].password"
