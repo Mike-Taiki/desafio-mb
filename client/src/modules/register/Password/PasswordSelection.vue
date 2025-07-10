@@ -13,6 +13,7 @@ const handleInputPassword = (event) => {
   <InputComponent
     v-model="password"
     type="password"
+    :maxlength="6"
     @keyup="handleInputPassword"
   />
 </template>
