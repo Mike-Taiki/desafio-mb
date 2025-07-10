@@ -9,7 +9,7 @@ import StepComponent from "@/shared/components/Step/StepComponent.vue";
 import { computed, ref } from "vue";
 import PasswordSelection from './Password/PasswordSelection.vue';
 
-const totalSteps = ref(5);
+const totalSteps = ref(4);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
 
 /**
@@ -51,6 +51,7 @@ const steps = ref({
     selectedPersonType: 0, // Default to no selection
     isValid: isFirstStepValid,
     hasBackButton: false,
+    nextButtonLabel: "Continuar"
   },
   [StepsEnum.INSERT_DATA]: {
     title: () => isPhysicalPerson() ? "Pessoa Física" : "Pessoa Jurídica",
@@ -60,17 +61,23 @@ const steps = ref({
     telephone: "",
     isValid: isSecondStepValid,
     hasBackButton: true,
+    backButtonLabel: "Voltar",
+    nextButtonLabel: "Continuar"
   },
   [StepsEnum.PASSWORD]: {
     title: () => "Senha de acesso",
     password: "",
     isValid: isThirdStepValid,
     hasBackButton: true,
+    backButtonLabel: "Voltar",
+    nextButtonLabel: "Continuar"
   },
-  [StepsEnum.CONFIRM_DATA]: {
+  [StepsEnum.CONFIRMATION]: {
     title: () => "Revise suas informações",
-    isValid: false,
+    isValid: isSecondStepValid,
     hasBackButton: true,
+    backButtonLabel: "Voltar",
+    nextButtonLabel: "Cadastrar"
   }
 });
 
@@ -127,9 +134,9 @@ function handleInputPassword(password) {
     <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
       {{ steps[currentStep].title() }}
     </HeadingComponent>
-    <SelectPersonType v-if="currentStep === 1" :selected-person="steps[currentStep].selectedPersonType" :email="steps[currentStep].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
+    <SelectPersonType v-if="currentStep === 1" :selected-person="steps[StepsEnum.PERSON_TYPE].selectedPersonType" :email="steps[StepsEnum.PERSON_TYPE].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
     <PhysicalPerson 
-      v-else-if="currentStep === 2" 
+      v-else-if="currentStep === 2 || currentStep === 4" 
       :name="steps[StepsEnum.INSERT_DATA].name" 
       :cpf="steps[StepsEnum.INSERT_DATA].cpf" 
       :birth-date="steps[StepsEnum.INSERT_DATA].birthDate" 
@@ -145,10 +152,10 @@ function handleInputPassword(password) {
     />
     <div class="register-buttons">
       <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
-        Voltar
+        {{ steps[currentStep].backButtonLabel }}
       </ButtonComponent>
       <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">
-        Continuar
+        {{ steps[currentStep].nextButtonLabel }}
       </ButtonComponent>
     </div>
   </section>
