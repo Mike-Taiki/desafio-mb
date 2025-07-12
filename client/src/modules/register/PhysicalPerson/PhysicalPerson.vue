@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import InputComponent from "@/shared/components/Input/InputComponent.vue";
 import { maskCpf } from "@/shared/helpers/maskCpf.js";
 import { maskTelephone } from "@/shared/helpers/maskTel.js";
@@ -8,11 +8,23 @@ const props = defineProps({
     type: String,
     required: true
   },
-  cpf: {
+  nameLabel: {
+    type: String,
+    default: "Nome"
+  },
+  document: {
     type: String,
     required: true
   },
-  birthDate: {
+  documentLabel: {
+    type: String,
+    default: "CPF"
+  },
+  date: {
+    type: String,
+    required: true
+  },
+  dateLabel: {
     type: String,
     required: true
   },
@@ -34,7 +46,7 @@ const typedCpf = ref(props.cpf);
 const typedBirthDate = ref(props.birthDate);
 const typedTelephone = ref(props.telephone);
 const typedPassword = ref(props.password);
-const emit = defineEmits(["inputName", "inputCpf", "inputBirthDate", "inputTelephone", "inputPassword"]);
+const emit = defineEmits(["inputName", "inputDocument", "inputDate", "inputTelephone", "inputPassword"]);
 
 const handleInputName = (event) => {
   emit("inputName", event.target.value);
@@ -42,11 +54,11 @@ const handleInputName = (event) => {
 
 const handleInputCpf = (event) => {
   typedCpf.value = maskCpf(event.target.value);
-  emit("inputCpf", typedCpf.value);
+  emit("inputDocument", typedCpf.value);
 };
 
 const handleInputBirthdate = (event) => {
-  emit("inputBirthDate", event.target.value);
+  emit("inputDate", event.target.value);
 }
 
 const handleInputTelephone = (event) => {
@@ -63,13 +75,13 @@ const handleInputPassword = (event) => {
   <InputComponent 
     v-model="typedName"
     class="register__input" 
-    label="Nome" 
+    :label="props.nameLabel" 
     @keyup="handleInputName"
   />
   <InputComponent 
     v-model="typedCpf"
     class="register__input" 
-    label="CPF" 
+    :label="documentLabel" 
     :maxlength="14"
     @keyup="handleInputCpf"
   />
@@ -77,7 +89,7 @@ const handleInputPassword = (event) => {
     v-model="typedBirthDate"
     type="date"
     class="register__input" 
-    label="Data de nascimento" 
+    :label="props.dateLabel" 
     @keyup="handleInputBirthdate"
   />
   <InputComponent 
