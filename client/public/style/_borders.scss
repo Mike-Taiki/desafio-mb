@@ -1,14 +1,16 @@
+@use "colors";
+
 // border colors
-$border-black: $black;
+$border-black: colors.$black;
 
 // border style
 $border-black-1: 1px solid $border-black;
-$border-orange-1: 1px solid $orange;
-$border-gray-1: 1px solid $gray;
+$border-orange-1: 1px solid colors.$orange;
+$border-gray-1: 1px solid colors.$gray;
 
 $border-black-2: 2px solid $border-black;
-$border-orange-2: 2px solid $orange;
-$border-gray-2: 2px solid $gray;
+$border-orange-2: 2px solid colors.$orange;
+$border-gray-2: 2px solid colors.$gray;
 
 // border radius
 $radius-1: 0.25rem;

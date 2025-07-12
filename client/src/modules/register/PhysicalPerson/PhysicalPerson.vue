@@ -2,7 +2,7 @@
 import InputComponent from "@/shared/components/Input/InputComponent.vue";
 import { maskCpf } from "@/shared/helpers/maskCpf.js";
 import { maskTelephone } from "@/shared/helpers/maskTel.js";
-import { defineEmits, defineProps, ref } from "vue";
+import { defineProps, ref } from "vue";
 const props = defineProps({
   name: {
     type: String,

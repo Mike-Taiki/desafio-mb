@@ -1,9 +1,16 @@
+@use "colors";
+
 // font
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
 
 // colors
-$text-black: $black;
-$text-orange: $orange;
-$text-white: $white;
+$text-black: colors.$black;
+$text-orange: colors.$orange;
+$text-white: colors.$white;
 
 // sizes
 $text-md: 1rem;

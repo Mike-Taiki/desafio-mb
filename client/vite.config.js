@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,7 +12,12 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "/public/style/styles.scss" as *;`,
+        additionalData: `
+          @use "/public/style/_colors.scss" as *;
+          @use "/public/style/_typography.scss" as *;
+          @use "/public/style/_spacing.scss" as *;
+          @use "/public/style/_borders.scss" as *;
+        `,
         api: "modern",
       },
     },
