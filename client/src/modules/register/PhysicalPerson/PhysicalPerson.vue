@@ -42,8 +42,8 @@ const props = defineProps({
   }
 });
 const typedName = ref(props.name);
-const typedCpf = ref(props.cpf);
-const typedBirthDate = ref(props.birthDate);
+const typedCpf = ref(props.document);
+const typedBirthDate = ref(props.date);
 const typedTelephone = ref(props.telephone);
 const typedPassword = ref(props.password);
 const emit = defineEmits(["inputName", "inputDocument", "inputDate", "inputTelephone", "inputPassword"]);

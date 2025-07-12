@@ -71,8 +71,8 @@ function isPhysicalPerson() {
 }
 
 function handleSelectedPersonType(selectedPersonType) {
-  steps.value[StepsEnum.INSERT_DATA] = isPhysicalPerson() ? PhysicalPersonStep : LegalPersonStep
   steps.value[StepsEnum.PERSON_TYPE].selectedPersonType = selectedPersonType;
+  steps.value[StepsEnum.INSERT_DATA] = isPhysicalPerson() ? PhysicalPersonStep : LegalPersonStep
 };
 
 function handleInputEmail(email) {
@@ -90,15 +90,13 @@ function handleInputName(name) {
 };
 
 function handleInputDocument(document) {
-  isPhysicalPerson()
-    ? steps.value[StepsEnum.INSERT_DATA].cpf = document
-    : steps.value[StepsEnum.INSERT_DATA].cnpj = document;
+  const field = isPhysicalPerson() ? 'cpf' : 'cnpj'
+  steps.value[StepsEnum.INSERT_DATA][field] = document
 };
 
 function handleInputDate(date) {
-  isPhysicalPerson()
-    ? steps.value[StepsEnum.INSERT_DATA].birthDate = date
-    : steps.value[StepsEnum.INSERT_DATA].openingDate = date;
+  const field = isPhysicalPerson() ? 'birthDate' : 'openingDate'
+  steps.value[StepsEnum.INSERT_DATA][field] = date
 };
 
 function handleInputTelephone(telephone) {
