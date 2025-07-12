@@ -26,7 +26,7 @@ function validateEmail(email) {
 
 const isFirstStepValid = computed(() => {
   const isEmailValid = validateEmail(steps.value[currentStep.value].email);
-  const isPersonTypeSelected = steps.value[currentStep.value].selectedPersonType !== null;
+  const isPersonTypeSelected = steps.value[currentStep.value].selectedPersonType !== 0;
   return isEmailValid && isPersonTypeSelected;
 })
 
