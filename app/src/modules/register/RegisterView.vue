@@ -93,7 +93,6 @@ function handleInputDocument(document) {
   const field = isPhysicalPerson() ? 'Cpf' : 'Cnpj'
   steps.value[StepsEnum.INSERT_DATA][`masked${field}`] = document.maskedDocument
   steps.value[StepsEnum.INSERT_DATA][`unmasked${field}`] = document.unmaskedDocument
-  console.log("document: ", steps.value[StepsEnum.INSERT_DATA])
 };
 
 function handleInputDate(date) {
