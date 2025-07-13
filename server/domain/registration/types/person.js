@@ -16,6 +16,8 @@ class Person {
 		if (typeof email !== "string") {
 			throw new Error("Email must be a string");
 		}
+
+		return email;
 	}
 
 	validateTelephone(telephone) {
@@ -30,6 +32,8 @@ class Person {
 		if (telephone.length < 10 || telephone.length > 11) {
 			throw new Error("Telephone must be a valid phone number");
 		}
+
+		return telephone;
 	}
 
 	validatePassword(password) {
@@ -44,6 +48,8 @@ class Person {
 		if (password.length !== 6) {
 			throw new Error("Password must be 6 characters");
 		}
+
+		return password;
 	}
 }
 
