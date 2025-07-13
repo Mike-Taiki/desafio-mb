@@ -37,6 +37,8 @@ class PersonRepository {
 				cnpj,
 				openingDate
 			);
+		} else {
+			throw new Error("Invalid person type");
 		}
 	}
 }

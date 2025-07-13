@@ -11,8 +11,8 @@ export const PersonTypeEnum = {
 };
 
 export const PersonTypeTranslationEnum = {
-  [PersonTypeEnum.PHYSICAL]: "Pessoa Física",
-  [PersonTypeEnum.LEGAL]: "Pessoa Jurídica",
+  [PersonTypeEnum.PHYSICAL]: "PHYSICAL",
+  [PersonTypeEnum.LEGAL]: "LEGAL",
 };
 
 export const LegalPersonStep = (handlePreviousStep, handleNextStep) => ({
