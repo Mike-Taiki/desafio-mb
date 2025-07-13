@@ -37,6 +37,10 @@ class Person {
 			throw new Error("Password is required");
 		}
 
+		if (typeof password !== "string") {
+			throw new Error("Password must be a string");
+		}
+
 		if (password.length !== 6) {
 			throw new Error("Password must be 6 characters");
 		}
