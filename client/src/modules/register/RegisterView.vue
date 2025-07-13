@@ -119,27 +119,44 @@ function handleNextStep() {
 }
 
 function handleFinalStep() {
+  const formData = {
+    email: steps.value[StepsEnum.PERSON_TYPE].email,
+    personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
+    password: steps.value[StepsEnum.PASSWORD].password,
+    name: steps.value[StepsEnum.INSERT_DATA].name,
+    telephone: steps.value[StepsEnum.INSERT_DATA].telephone,
+    ...(isPhysicalPerson() 
+      ? {
+          cpf: steps.value[StepsEnum.INSERT_DATA].cpf,
+          birthDate: steps.value[StepsEnum.INSERT_DATA].birthDate
+        }
+      : {
+          cnpj: steps.value[StepsEnum.INSERT_DATA].cnpj,
+          openingDate: steps.value[StepsEnum.INSERT_DATA].openingDate
+        }
+    )
+  };
+
   fetch('/registration', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: {
-      email: steps.value[StepsEnum.PERSON_TYPE].email,
-      personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
-      password: steps.value[StepsEnum.PASSWORD].password
-    }
-  }).then(response => {
-    if (response.ok) {
-      // Handle successful registration
-      console.log("Registration successful");
-    } else {
-      // Handle error response
-      console.error("Registration failed");
-    }
-  }).catch(error => {
-    console.error("Error during registration:", error);
-  });
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log("Registro realizado com sucesso!");
+        // Aqui você pode adicionar uma mensagem de sucesso ou redirecionar o usuário
+      } else {
+        console.error("Falha no registro");
+        // Aqui você pode mostrar uma mensagem de erro para o usuário
+      }
+    })
+    .catch(error => {
+      console.error("Erro durante o registro:", error);
+      // Aqui você pode mostrar uma mensagem de erro para o usuário
+    });
 }
 
 </script>
