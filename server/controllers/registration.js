@@ -4,59 +4,23 @@ const path = require("path");
 const router = express.Router();
 
 const {
-	PhysicalPerson,
-} = require("../domain/registration/validations/physical-person");
+	createPersonFactory,
+} = require("../domain/registration/helpers/create-person-factory");
 
 router.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../../app/dist/index.html"));
 });
 
 router.post("/", (req, res) => {
-	console.log("chegou aqui");
-	const {
-		email,
-		personType,
-		password,
-		name,
-		telephone,
-		cpf,
-		cnpj,
-		birthDate,
-		openingDate,
-	} = req.body;
-
-	// if (!email || !personType || !password || !name || !telephone) {
-	// 	return res.status(400).json({
-	// 		error: "Dados obrigatórios faltando",
-	// 	});
-	// }
-
-	// console.log("Dados do registro:", {
-	// 	email,
-	// 	personType,
-	// 	name,
-	// 	telephone,
-	// 	...(personType === "PHYSICAL" ? { cpf, birthDate } : { cnpj, openingDate }),
-	// })
-
 	try {
-		const person = new PhysicalPerson(
-			email,
-			telephone,
-			password,
-			name,
-			cpf,
-			birthDate
-		);
-
-		console.log("person: ", person);
+		const person = createPersonFactory(req.body);
 		res.status(201).json({
-			message: "Registro realizado com sucesso",
+			message: "User created successfully",
 			data: person,
 		});
 	} catch (error) {
 		return res.status(400).json({
-			error: error.message,
+			message: error.message,
 		});
 	}
 });

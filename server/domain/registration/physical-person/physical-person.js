@@ -1,4 +1,4 @@
-const { Person } = require("./person.js");
+const { Person } = require("../types/person.js");
 
 class PhysicalPerson extends Person {
 	constructor(email, telephone, password, name, cpf, birthDate) {
@@ -20,6 +20,8 @@ class PhysicalPerson extends Person {
 		if (name.length < 3 || name.length > 255) {
 			throw new Error("Name must be between 3 and 255 characters");
 		}
+
+		return name;
 	}
 
 	validateCpf(cpf) {
@@ -34,6 +36,12 @@ class PhysicalPerson extends Person {
 		if (cpf.length !== 11) {
 			throw new Error("CPF must be 11 characters");
 		}
+
+		if (!cpf.match(/^\d{11}$/)) {
+			throw new Error("CPF must be only numbers");
+		}
+
+		return cpf;
 	}
 
 	validateBirthDate(birthDate) {
@@ -48,6 +56,8 @@ class PhysicalPerson extends Person {
 		if (birthDate.length !== 10) {
 			throw new Error("Birth date must be 10 characters");
 		}
+
+		return birthDate;
 	}
 }
 
