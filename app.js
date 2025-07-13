@@ -20,7 +20,7 @@ const options = {
 app.use(express.static("client/dist", options));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "/dist/index.html"));
 });
 
 app.post("/registration", (req, res) => {

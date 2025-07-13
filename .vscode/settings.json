@@ -29,5 +29,6 @@
   },
   "eslint.validate": ["javascript", "vue"],
   "eslint.format.enable": true,
-  "volar.takeOverMode": false
+  "volar.takeOverMode": false,
+  "recommendations": ["Vue.volar"]
 }
