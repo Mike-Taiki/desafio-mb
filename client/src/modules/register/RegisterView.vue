@@ -1,7 +1,7 @@
 <script setup>
 import PhysicalPerson from "@/modules/register/PhysicalPerson/PhysicalPerson.vue";
 import SelectPersonType from "@/modules/register/SelectPersonType/SelectPersonType.vue";
-import { LegalPersonStep, PersonTypeEnum, PhysicalPersonStep, StepsEnum } from "@/modules/register/types.js";
+import { LegalPersonStep, PersonTypeEnum, PersonTypeTranslationEnum, PhysicalPersonStep, StepsEnum } from "@/modules/register/types.js";
 import ButtonComponent from "@/shared/components/Button/ButtonComponent.vue";
 import HeadingComponent from "@/shared/components/Heading/HeadingComponent.vue";
 import { headingOptionsEnum } from "@/shared/components/Heading/types.js";
@@ -46,7 +46,9 @@ const steps = ref({
     selectedPersonType: 0, // Default to no selection
     isValid: isFirstStepValid,
     hasBackButton: false,
-    nextButtonLabel: "Continuar"
+    backButtonAction: handlePreviousStep,
+    nextButtonLabel: "Continuar",
+    nextButtonAction: handleNextStep
   },
   [StepsEnum.INSERT_DATA]: {},
   [StepsEnum.PASSWORD]: {
@@ -54,15 +56,19 @@ const steps = ref({
     password: "",
     isValid: isThirdStepValid,
     hasBackButton: true,
+    backButtonAction: handlePreviousStep,
     backButtonLabel: "Voltar",
-    nextButtonLabel: "Continuar"
+    nextButtonLabel: "Continuar",
+    nextButtonAction: handleNextStep
   },
   [StepsEnum.CONFIRMATION]: {
     title: () => "Revise suas informações",
     isValid: isFourthStepValid,
     hasBackButton: true,
+    backButtonAction: handlePreviousStep,
     backButtonLabel: "Voltar",
-    nextButtonLabel: "Cadastrar"
+    nextButtonLabel: "Cadastrar",
+    nextButtonAction: handleFinalStep
   }
 });
 
@@ -72,17 +78,11 @@ function isPhysicalPerson() {
 
 function handleSelectedPersonType(selectedPersonType) {
   steps.value[StepsEnum.PERSON_TYPE].selectedPersonType = selectedPersonType;
-  steps.value[StepsEnum.INSERT_DATA] = isPhysicalPerson() ? PhysicalPersonStep : LegalPersonStep
+  steps.value[StepsEnum.INSERT_DATA] = isPhysicalPerson() ? PhysicalPersonStep(handlePreviousStep, handleNextStep) : LegalPersonStep(handlePreviousStep, handleNextStep)
 };
 
 function handleInputEmail(email) {
   steps.value[StepsEnum.PERSON_TYPE].email = email;
-};
-
-function goBack() {
-  if (currentStep.value > 1) {
-    currentStep.value--;
-  }
 };
 
 function handleInputName(name) {
@@ -106,6 +106,41 @@ function handleInputTelephone(telephone) {
 function handleInputPassword(password) {
   steps.value[StepsEnum.PASSWORD].password = password;
 };
+
+function handlePreviousStep() {
+  if (currentStep.value > 1) {
+    currentStep.value--;
+  }
+}
+
+function handleNextStep() {
+  console.log("Current Step:", currentStep.value);
+  currentStep.value++;
+}
+
+function handleFinalStep() {
+  fetch('/registration', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      email: steps.value[StepsEnum.PERSON_TYPE].email,
+      personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
+      password: steps.value[StepsEnum.PASSWORD].password
+    }
+  }).then(response => {
+    if (response.ok) {
+      // Handle successful registration
+      console.log("Registration successful");
+    } else {
+      // Handle error response
+      console.error("Registration failed");
+    }
+  }).catch(error => {
+    console.error("Error during registration:", error);
+  });
+}
 
 </script>
 
@@ -139,10 +174,10 @@ function handleInputPassword(password) {
       @input-password="handleInputPassword" 
     />
     <div class="register-buttons">
-      <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" :disabled="currentStep === 1" @click="goBack">
+      <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" @click="steps[currentStep].backButtonAction">
         {{ steps[currentStep].backButtonLabel }}
       </ButtonComponent>
-      <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="currentStep++">
+      <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="steps[currentStep].nextButtonAction">
         {{ steps[currentStep].nextButtonLabel }}
       </ButtonComponent>
     </div>

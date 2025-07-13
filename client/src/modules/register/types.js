@@ -10,7 +10,12 @@ export const PersonTypeEnum = {
   LEGAL: 2,
 };
 
-export const LegalPersonStep = {
+export const PersonTypeTranslationEnum = {
+  [PersonTypeEnum.PHYSICAL]: "Pessoa Física",
+  [PersonTypeEnum.LEGAL]: "Pessoa Jurídica",
+}
+
+export const LegalPersonStep = (handlePreviousStep, handleNextStep) => ({
   title: () => "Pessoa Jurídica",
   name: "",
   cnpj: "",
@@ -21,10 +26,12 @@ export const LegalPersonStep = {
   },
   hasBackButton: true,
   backButtonLabel: "Voltar",
-  nextButtonLabel: "Continuar"
-}
+  backButtonAction: handlePreviousStep,
+  nextButtonLabel: "Continuar",
+  nextButtonAction: handleNextStep,
+})
 
-export const PhysicalPersonStep = {
+export const PhysicalPersonStep = (handlePreviousStep, handleNextStep) => ({
   title: () => "Pessoa Física",
   name: "",
   cpf: "",
@@ -35,5 +42,7 @@ export const PhysicalPersonStep = {
   },
   hasBackButton: true,
   backButtonLabel: "Voltar",
-  nextButtonLabel: "Continuar"
-}
+  backButtonAction: handlePreviousStep,
+  nextButtonLabel: "Continuar",
+  nextButtonAction: handleNextStep,
+})
