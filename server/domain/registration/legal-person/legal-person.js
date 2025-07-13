@@ -1,27 +1,27 @@
 const { Person } = require("../types/person.js");
 
 class LegalPerson extends Person {
-	constructor(email, telephone, password, name, cnpj, openingDate) {
+	constructor(email, telephone, password, socialReason, cnpj, openingDate) {
 		super(email, telephone, password);
-		this.name = this.validateName(name);
+		this.socialReason = this.validateSocialReason(socialReason);
 		this.cnpj = this.validateCnpj(cnpj);
 		this.openingDate = this.validateOpeningDate(openingDate);
 	}
 
-	validateName(name) {
-		if (!name) {
-			throw new Error("Name is required");
+	validateSocialReason(socialReason) {
+		if (!socialReason) {
+			throw new Error("Social reason is required");
 		}
 
-		if (typeof name !== "string") {
-			throw new Error("Name must be a string");
+		if (typeof socialReason !== "string") {
+			throw new Error("Social reason must be a string");
 		}
 
-		if (name.length < 3 || name.length > 255) {
-			throw new Error("Name must be between 3 and 255 characters");
+		if (socialReason.length < 10 || socialReason.length > 255) {
+			throw new Error("Social reason must be between 10 and 255 characters");
 		}
 
-		return name;
+		return socialReason;
 	}
 
 	validateCnpj(cnpj) {

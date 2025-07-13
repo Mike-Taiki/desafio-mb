@@ -17,6 +17,7 @@ class PersonRepository {
 			cnpj,
 			birthDate,
 			openingDate,
+			socialReason,
 		} = requestBody;
 
 		if (personType === "PHYSICAL") {
@@ -33,7 +34,7 @@ class PersonRepository {
 				email,
 				telephone,
 				password,
-				name,
+				socialReason,
 				cnpj,
 				openingDate
 			);
