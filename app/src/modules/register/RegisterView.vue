@@ -90,8 +90,10 @@ function handleInputName(name) {
 };
 
 function handleInputDocument(document) {
-  const field = isPhysicalPerson() ? 'cpf' : 'cnpj'
-  steps.value[StepsEnum.INSERT_DATA][field] = document
+  const field = isPhysicalPerson() ? 'Cpf' : 'Cnpj'
+  steps.value[StepsEnum.INSERT_DATA][`masked${field}`] = document.maskedDocument
+  steps.value[StepsEnum.INSERT_DATA][`unmasked${field}`] = document.unmaskedDocument
+  console.log("document: ", steps.value[StepsEnum.INSERT_DATA])
 };
 
 function handleInputDate(date) {
@@ -100,7 +102,8 @@ function handleInputDate(date) {
 };
 
 function handleInputTelephone(telephone) {
-  steps.value[StepsEnum.INSERT_DATA].telephone = telephone;
+  steps.value[StepsEnum.INSERT_DATA].maskedTelephone = telephone.maskedTelephone;
+  steps.value[StepsEnum.INSERT_DATA].unmaskedTelephone = telephone.unmaskedTelephone;
 };
 
 function handleInputPassword(password) {
@@ -114,7 +117,6 @@ function handlePreviousStep() {
 }
 
 function handleNextStep() {
-  console.log("Current Step:", currentStep.value);
   currentStep.value++;
 }
 
@@ -124,14 +126,14 @@ function handleFinalStep() {
     personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
     password: steps.value[StepsEnum.PASSWORD].password,
     name: steps.value[StepsEnum.INSERT_DATA].name,
-    telephone: steps.value[StepsEnum.INSERT_DATA].telephone,
+    telephone: steps.value[StepsEnum.INSERT_DATA].unmaskedTelephone,
     ...(isPhysicalPerson() 
       ? {
-          cpf: steps.value[StepsEnum.INSERT_DATA].cpf,
+          cpf: steps.value[StepsEnum.INSERT_DATA].unmaskedCpf,
           birthDate: steps.value[StepsEnum.INSERT_DATA].birthDate
         }
       : {
-          cnpj: steps.value[StepsEnum.INSERT_DATA].cnpj,
+          cnpj: steps.value[StepsEnum.INSERT_DATA].unmaskedCnpj,
           openingDate: steps.value[StepsEnum.INSERT_DATA].openingDate
         }
     )
@@ -172,11 +174,11 @@ function handleFinalStep() {
       v-else-if="currentStep === 2 || currentStep === 4" 
       :name="steps[StepsEnum.INSERT_DATA]['name']" 
       :name-label="isPhysicalPerson() ? 'Nome' : 'Razão Social'"
-      :document="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['cpf'] : steps[StepsEnum.INSERT_DATA]['cnpj']" 
+      :document="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['unmaskedCpf'] : steps[StepsEnum.INSERT_DATA]['unmaskedCnpj']" 
       :document-label="isPhysicalPerson() ? 'CPF' : 'CNPJ'"
       :date="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['birthDate'] : steps[StepsEnum.INSERT_DATA]['openingDate']" 
       :date-label="isPhysicalPerson() ? 'Data de nascimento' : 'Data de abertura'"
-      :telephone="steps[StepsEnum.INSERT_DATA]['telephone']"
+      :telephone="steps[StepsEnum.INSERT_DATA]['unmaskedTelephone']"
       :password="steps[StepsEnum.PASSWORD]['password']"
       :has-input-password="currentStep === 4"
       @input-name="handleInputName"

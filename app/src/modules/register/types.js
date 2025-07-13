@@ -13,36 +13,47 @@ export const PersonTypeEnum = {
 export const PersonTypeTranslationEnum = {
   [PersonTypeEnum.PHYSICAL]: "Pessoa Física",
   [PersonTypeEnum.LEGAL]: "Pessoa Jurídica",
-}
+};
 
 export const LegalPersonStep = (handlePreviousStep, handleNextStep) => ({
   title: () => "Pessoa Jurídica",
   name: "",
-  cnpj: "",
+  maskedCnpj: "",
+  unmaskedCnpj: "",
   openingDate: "",
-  telephone: "",
+  maskedTelephone: "",
+  unmaskedTelephone: "",
   isValid: () => {
-    return this.name && this.cnpj && this.openingDate && this.telephone;
+    return (
+      this.name &&
+      this.unmaskedCnpj &&
+      this.openingDate &&
+      this.unmaskedTelephone
+    );
   },
   hasBackButton: true,
   backButtonLabel: "Voltar",
   backButtonAction: handlePreviousStep,
   nextButtonLabel: "Continuar",
   nextButtonAction: handleNextStep,
-})
+});
 
 export const PhysicalPersonStep = (handlePreviousStep, handleNextStep) => ({
   title: () => "Pessoa Física",
   name: "",
-  cpf: "",
+  maskedCpf: "",
+  unmaskedCpf: "",
   birthDate: "",
-  telephone: "",
+  maskedTelephone: "",
+  unmaskedTelephone: "",
   isValid: () => {
-    return this.name && this.cpf && this.birthDate && this.telephone;
+    return (
+      this.name && this.unmaskedCpf && this.birthDate && this.unmaskedTelephone
+    );
   },
   hasBackButton: true,
   backButtonLabel: "Voltar",
   backButtonAction: handlePreviousStep,
   nextButtonLabel: "Continuar",
   nextButtonAction: handleNextStep,
-})
+});

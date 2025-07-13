@@ -53,8 +53,9 @@ const handleInputName = (event) => {
 };
 
 const handleInputCpf = (event) => {
-  typedCpf.value = maskCpf(event.target.value);
-  emit("inputDocument", typedCpf.value);
+  const { maskedCpf, unmaskedCpf } = maskCpf(event.target.value);
+  typedCpf.value = maskedCpf;
+  emit("inputDocument", {maskedDocument: maskedCpf, unmaskedDocument: unmaskedCpf});
 };
 
 const handleInputBirthdate = (event) => {
@@ -63,8 +64,9 @@ const handleInputBirthdate = (event) => {
 
 const handleInputTelephone = (event) => {
   const telephoneValue = event.target.value;
-  typedTelephone.value = maskTelephone(telephoneValue);
-  emit("inputTelephone", typedTelephone.value);
+  const { maskedTelephone, unmaskedTelephone } = maskTelephone(telephoneValue);
+  typedTelephone.value = maskedTelephone;
+  emit("inputTelephone", {maskedTelephone, unmaskedTelephone});
 };
 
 const handleInputPassword = (event) => {

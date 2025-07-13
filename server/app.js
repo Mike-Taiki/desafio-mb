@@ -1,9 +1,12 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const port = 3000;
 const registration = require("./controllers/registration");
 
 app.use(express.json());
+
+app.use(express.static("../app/dist"));
 
 app.use("/registration", registration);
 
