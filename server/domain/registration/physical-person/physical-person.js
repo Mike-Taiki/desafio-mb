@@ -45,19 +45,7 @@ class PhysicalPerson extends Person {
 	}
 
 	validateBirthDate(birthDate) {
-		if (!birthDate) {
-			throw new Error("Birth date is required");
-		}
-
-		if (typeof birthDate !== "string") {
-			throw new Error("Birth date must be a string");
-		}
-
-		if (birthDate.length !== 10) {
-			throw new Error("Birth date must be 10 characters");
-		}
-
-		return birthDate;
+		return this.validateDate("birthDate", birthDate);
 	}
 }
 

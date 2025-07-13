@@ -41,15 +41,7 @@ class LegalPerson extends Person {
 	}
 
 	validateOpeningDate(openingDate) {
-		if (!openingDate) {
-			throw new Error("Opening date is required");
-		}
-
-		if (typeof openingDate !== "string") {
-			throw new Error("Opening date must be a string");
-		}
-
-		return openingDate;
+		return this.validateDate("openingDate", openingDate);
 	}
 }
 

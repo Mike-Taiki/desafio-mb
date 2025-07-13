@@ -17,9 +17,9 @@ class Person {
 			throw new Error("Email must be a string");
 		}
 
-		const isValidEmail = new RegExp(
-			/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i
-		).test(email);
+		const isValidEmail = new RegExp(/^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/).test(
+			email
+		);
 		if (!isValidEmail) {
 			throw new Error("Email must be a valid email address");
 		}
@@ -57,6 +57,28 @@ class Person {
 		}
 
 		return password;
+	}
+
+	validateDate(field, date) {
+		if (!date) {
+			throw new Error(`${field} is required`);
+		}
+
+		if (typeof date !== "string") {
+			throw new Error(`${field} must be a string`);
+		}
+
+		if (date.length !== 10) {
+			throw new Error(`${field} must be 10 characters`);
+		}
+
+		const isValidDate = new RegExp(/^\d{4}-\d{2}-\d{2}$/).test(date);
+
+		if (!isValidDate) {
+			throw new Error(`${field} must be a valid date in the format YYYY-MM-DD`);
+		}
+
+		return date;
 	}
 }
 
