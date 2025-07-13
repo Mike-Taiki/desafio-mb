@@ -20,7 +20,7 @@ const currentStep = ref(StepsEnum.PERSON_TYPE);
  * @description Validates the email format using a regular expression.
  */
 function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
   return emailRegex.test(email);
 };
 

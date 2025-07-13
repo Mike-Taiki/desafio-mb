@@ -17,6 +17,13 @@ class Person {
 			throw new Error("Email must be a string");
 		}
 
+		const isValidEmail = new RegExp(
+			/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i
+		).test(email);
+		if (!isValidEmail) {
+			throw new Error("Email must be a valid email address");
+		}
+
 		return email;
 	}
 
