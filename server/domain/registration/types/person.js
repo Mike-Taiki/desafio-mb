@@ -78,6 +78,25 @@ class Person {
 			throw new Error(`${field} must be a valid date in the format YYYY-MM-DD`);
 		}
 
+		const [year, month, day] = date.split("-");
+
+		const dateToValidate = new Date(
+			parseInt(year),
+			parseInt(month) - 1,
+			parseInt(day)
+		);
+
+		const currentDate = new Date();
+		const currentDateOnly = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth(),
+			currentDate.getDate()
+		);
+
+		if (dateToValidate >= currentDateOnly) {
+			throw new Error(`${field} must be a date before the current date`);
+		}
+
 		return date;
 	}
 }
