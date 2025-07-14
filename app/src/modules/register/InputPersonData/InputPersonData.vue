@@ -47,9 +47,9 @@ const props = defineProps({
   }
 });
 const typedName = ref(props.name);
-const typedCpf = ref(props.document);
+const typedCpf = ref(props.isPhysicalPerson ? maskCpf(props.document).maskedCpf : maskCnpj(props.document).maskedCnpj);
 const typedBirthDate = ref(props.date);
-const typedTelephone = ref(props.telephone);
+const typedTelephone = ref(maskTelephone(props.telephone).maskedTelephone);
 const typedPassword = ref(props.password);
 const emit = defineEmits(["inputName", "inputDocument", "inputDate", "inputTelephone", "inputPassword"]);
 
