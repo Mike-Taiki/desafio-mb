@@ -21,6 +21,7 @@ const handleInputPassword = (event) => {
     v-model="password"
     type="password"
     :maxlength="6"
+    label="Sua senha"
     @keyup="handleInputPassword"
   />
 </template>
