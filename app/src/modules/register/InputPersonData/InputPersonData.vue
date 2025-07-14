@@ -11,7 +11,7 @@ const props = defineProps({
   },
   nameLabel: {
     type: String,
-    default: "Nome"
+    required: true
   },
   document: {
     type: String,
@@ -19,7 +19,7 @@ const props = defineProps({
   },
   documentLabel: {
     type: String,
-    default: "CPF"
+    required: true
   },
   date: {
     type: String,

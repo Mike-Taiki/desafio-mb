@@ -12,13 +12,6 @@ import PasswordSelection from './Password/PasswordSelection.vue';
 const totalSteps = ref(4);
 const currentStep = ref(StepsEnum.PERSON_TYPE);
 
-/**
- * 
- * @param {string} email - The email to validate.
- * @returns {boolean} - Returns true if the email is valid, otherwise false.
- * @type {function}
- * @description Validates the email format using a regular expression.
- */
 function validateEmail(email) {
   const emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
   return emailRegex.test(email);
@@ -166,7 +159,12 @@ async function handleFinalStep() {
     <HeadingComponent class="register__heading" :level="headingOptionsEnum.MD">
       {{ steps[currentStep].title() }}
     </HeadingComponent>
-    <SelectPersonType v-if="currentStep === 1" :selected-person="steps[StepsEnum.PERSON_TYPE].selectedPersonType" :email="steps[StepsEnum.PERSON_TYPE].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
+    <SelectPersonType 
+      v-if="currentStep === 1" 
+      :selected-person="steps[StepsEnum.PERSON_TYPE].selectedPersonType" 
+      :email="steps[StepsEnum.PERSON_TYPE].email" @input-email="handleInputEmail" 
+      @selected-person-type="handleSelectedPersonType" 
+    />
     <InputPersonData 
       v-else-if="currentStep === 2 || currentStep === 4" 
       :name="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['name'] : steps[StepsEnum.INSERT_DATA]['socialReason']" 
@@ -184,17 +182,24 @@ async function handleFinalStep() {
       @input-date="handleInputDate"
       @input-telephone="handleInputTelephone"
       @input-password="handleInputPassword"
-      />
+    />
     <PasswordSelection 
       v-else-if="currentStep === 3"
       :password="steps[StepsEnum.PASSWORD].password"
       @input-password="handleInputPassword" 
     />
     <div class="register-buttons">
-      <ButtonComponent v-if="steps[currentStep].hasBackButton" class="register__button" style-type="secondary" @click="steps[currentStep].backButtonAction">
+      <ButtonComponent 
+        v-if="steps[currentStep].hasBackButton" 
+        class="register__button" 
+        style-type="secondary" 
+        @click="steps[currentStep].backButtonAction">
         {{ steps[currentStep].backButtonLabel }}
       </ButtonComponent>
-      <ButtonComponent class="register__button" :disabled="!steps[currentStep].isValid" @click="steps[currentStep].nextButtonAction">
+      <ButtonComponent 
+        class="register__button" 
+        :disabled="!steps[currentStep].isValid" 
+        @click="steps[currentStep].nextButtonAction">
         {{ steps[currentStep].nextButtonLabel }}
       </ButtonComponent>
     </div>
