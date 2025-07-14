@@ -1,5 +1,5 @@
 <script setup>
-import PhysicalPerson from "@/modules/register/PhysicalPerson/PhysicalPerson.vue";
+import InputPersonData from "@/modules/register/InputPersonData/InputPersonData.vue";
 import SelectPersonType from "@/modules/register/SelectPersonType/SelectPersonType.vue";
 import { LegalPersonStep, PersonTypeEnum, PersonTypeTranslationEnum, PhysicalPersonStep, StepsEnum } from "@/modules/register/types.js";
 import ButtonComponent from "@/shared/components/Button/ButtonComponent.vue";
@@ -167,7 +167,7 @@ async function handleFinalStep() {
       {{ steps[currentStep].title() }}
     </HeadingComponent>
     <SelectPersonType v-if="currentStep === 1" :selected-person="steps[StepsEnum.PERSON_TYPE].selectedPersonType" :email="steps[StepsEnum.PERSON_TYPE].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
-    <PhysicalPerson 
+    <InputPersonData 
       v-else-if="currentStep === 2 || currentStep === 4" 
       :name="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['name'] : steps[StepsEnum.INSERT_DATA]['socialReason']" 
       :name-label="isPhysicalPerson() ? 'Nome' : 'Razão Social'"
