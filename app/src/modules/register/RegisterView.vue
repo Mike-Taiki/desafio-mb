@@ -86,7 +86,8 @@ function handleInputEmail(email) {
 };
 
 function handleInputName(name) {
-  steps.value[StepsEnum.INSERT_DATA].name = name;
+  const field = isPhysicalPerson() ? 'name' : 'socialReason'
+  steps.value[StepsEnum.INSERT_DATA][field] = name;
 };
 
 function handleInputDocument(document) {
@@ -124,7 +125,7 @@ function handleFinalStep() {
     email: steps.value[StepsEnum.PERSON_TYPE].email,
     personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
     password: steps.value[StepsEnum.PASSWORD].password,
-    name: steps.value[StepsEnum.INSERT_DATA].name,
+    name: isPhysicalPerson() ? steps.value[StepsEnum.INSERT_DATA].name : steps.value[StepsEnum.INSERT_DATA].socialReason,
     telephone: steps.value[StepsEnum.INSERT_DATA].unmaskedTelephone,
     ...(isPhysicalPerson() 
       ? {
