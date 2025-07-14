@@ -125,19 +125,17 @@ function handleFinalStep() {
     email: steps.value[StepsEnum.PERSON_TYPE].email,
     personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
     password: steps.value[StepsEnum.PASSWORD].password,
-    name: isPhysicalPerson() ? steps.value[StepsEnum.INSERT_DATA].name : steps.value[StepsEnum.INSERT_DATA].socialReason,
     telephone: steps.value[StepsEnum.INSERT_DATA].unmaskedTelephone,
-    ...(isPhysicalPerson() 
-      ? {
-          cpf: steps.value[StepsEnum.INSERT_DATA].unmaskedCpf,
-          birthDate: steps.value[StepsEnum.INSERT_DATA].birthDate
-        }
-      : {
-          cnpj: steps.value[StepsEnum.INSERT_DATA].unmaskedCnpj,
-          openingDate: steps.value[StepsEnum.INSERT_DATA].openingDate
-        }
-    )
   };
+
+  if (isPhysicalPerson()) {
+    formData.cpf = steps.value[StepsEnum.INSERT_DATA].unmaskedCpf;
+    formData.birthDate = steps.value[StepsEnum.INSERT_DATA].birthDate;
+  } else {
+    formData.socialReason = steps.value[StepsEnum.INSERT_DATA].socialReason;
+    formData.cnpj = steps.value[StepsEnum.INSERT_DATA].unmaskedCnpj;
+    formData.openingDate = steps.value[StepsEnum.INSERT_DATA].openingDate;
+  }
 
   fetch('/registration', {
     method: 'POST',
@@ -172,7 +170,7 @@ function handleFinalStep() {
     <SelectPersonType v-if="currentStep === 1" :selected-person="steps[StepsEnum.PERSON_TYPE].selectedPersonType" :email="steps[StepsEnum.PERSON_TYPE].email" @input-email="handleInputEmail" @selected-person-type="handleSelectedPersonType" />
     <PhysicalPerson 
       v-else-if="currentStep === 2 || currentStep === 4" 
-      :name="steps[StepsEnum.INSERT_DATA]['name']" 
+      :name="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['name'] : steps[StepsEnum.INSERT_DATA]['socialReason']" 
       :name-label="isPhysicalPerson() ? 'Nome' : 'Razão Social'"
       :document="isPhysicalPerson() ? steps[StepsEnum.INSERT_DATA]['unmaskedCpf'] : steps[StepsEnum.INSERT_DATA]['unmaskedCnpj']" 
       :document-label="isPhysicalPerson() ? 'CPF' : 'CNPJ'"
