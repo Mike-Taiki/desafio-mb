@@ -129,6 +129,7 @@ function handleFinalStep() {
   };
 
   if (isPhysicalPerson()) {
+    formData.name = steps.value[StepsEnum.INSERT_DATA].name;
     formData.cpf = steps.value[StepsEnum.INSERT_DATA].unmaskedCpf;
     formData.birthDate = steps.value[StepsEnum.INSERT_DATA].birthDate;
   } else {
@@ -179,6 +180,7 @@ function handleFinalStep() {
       :telephone="steps[StepsEnum.INSERT_DATA]['unmaskedTelephone']"
       :password="steps[StepsEnum.PASSWORD]['password']"
       :has-input-password="currentStep === 4"
+      :is-physical-person="isPhysicalPerson()"
       @input-name="handleInputName"
       @input-document="handleInputDocument"
       @input-date="handleInputDate"
