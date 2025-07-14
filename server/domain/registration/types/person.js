@@ -36,7 +36,8 @@ class Person {
 			throw new Error("Telephone must be a string");
 		}
 
-		if (telephone.length < 10 || telephone.length > 11) {
+		const isValidTelephone = new RegExp(/^\d{10,11}$/).test(telephone);
+		if (!isValidTelephone) {
 			throw new Error("Telephone must be a valid phone number");
 		}
 
