@@ -110,7 +110,7 @@ const handleInputPassword = (event) => {
     class="register__input" 
     label="Telefone" 
     type="tel"  
-    :maxlength="13"
+    :maxlength="15"
     @keyup="handleInputTelephone"
   />
   <InputComponent 
