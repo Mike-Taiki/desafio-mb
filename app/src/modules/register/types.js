@@ -20,7 +20,7 @@ export const PersonTypeTranslationEnum = {
 export const LegalPersonStep = (handlePreviousStep, handleNextStep) => {
   const step = reactive({
     title: () => "Pessoa Jurídica",
-    name: "",
+    socialReason: "",
     maskedCnpj: "",
     unmaskedCnpj: "",
     openingDate: "",
@@ -35,9 +35,9 @@ export const LegalPersonStep = (handlePreviousStep, handleNextStep) => {
 
   step.isValid = computed(() => {
     return (
-      step.name?.length > 0 &&
+      step.socialReason?.length >= 10 &&
       step.unmaskedCnpj?.length >= 10 &&
-      step.unmaskedCnpj?.length <= 11 &&
+      step.unmaskedCnpj?.length !== 14 &&
       step.openingDate?.length > 0 &&
       step.unmaskedTelephone?.length >= 10
     );
@@ -64,7 +64,7 @@ export const PhysicalPersonStep = (handlePreviousStep, handleNextStep) => {
 
   step.isValid = computed(() => {
     return (
-      step.name?.length > 0 &&
+      step.name?.length >= 3 &&
       step.unmaskedCpf?.length === 11 &&
       step.birthDate?.length > 0 &&
       step.unmaskedTelephone?.length >= 10
