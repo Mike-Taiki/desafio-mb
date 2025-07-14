@@ -86,13 +86,25 @@ class Person {
 			parseInt(month) - 1,
 			parseInt(day)
 		);
-
+		
 		const currentDate = new Date();
 		const currentDateOnly = new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
 			currentDate.getDate()
 		);
+
+		if (year < 1900 || year > currentDate.getFullYear()) {
+			throw new Error(`${field} must be a year between 1900 and ${currentDate.getFullYear()}`);
+		}
+
+		if (parseInt(month) - 1 < 0 || parseInt(month) - 1 > 11) {
+			throw new Error(`${field} must be a month between 01 and 12`);
+		}
+
+		if (parseInt(day) < 1 || parseInt(day) > 31) {
+			throw new Error(`${field} must be a day between 01 and 31`);
+		}
 
 		if (dateToValidate >= currentDateOnly) {
 			throw new Error(`${field} must be a date before the current date`);
