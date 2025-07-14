@@ -1,6 +1,7 @@
 <script setup>
 import InputComponent from "@/shared/components/Input/InputComponent.vue";
 import { maskCpf } from "@/shared/helpers/maskCpf.js";
+import { maskCnpj } from "@/shared/helpers/maskCnpj.js";
 import { maskTelephone } from "@/shared/helpers/maskTel.js";
 import { defineProps, ref } from "vue";
 const props = defineProps({
@@ -39,6 +40,10 @@ const props = defineProps({
   hasInputPassword: {
     type: Boolean,
     default: false
+  },
+  isPhysicalPerson: {
+    type: Boolean,
+    required: true
   }
 });
 const typedName = ref(props.name);
@@ -53,9 +58,15 @@ const handleInputName = (event) => {
 };
 
 const handleInputCpf = (event) => {
-  const { maskedCpf, unmaskedCpf } = maskCpf(event.target.value);
-  typedCpf.value = maskedCpf;
-  emit("inputDocument", {maskedDocument: maskedCpf, unmaskedDocument: unmaskedCpf});
+  if (props.isPhysicalPerson) {
+    const { maskedCpf, unmaskedCpf } = maskCpf(event.target.value);
+    typedCpf.value = maskedCpf;
+    emit("inputDocument", {maskedDocument: maskedCpf, unmaskedDocument: unmaskedCpf});
+  } else {
+    const { maskedCnpj, unmaskedCnpj } = maskCnpj(event.target.value);
+    typedCpf.value = maskedCnpj;
+    emit("inputDocument", {maskedDocument: maskedCnpj, unmaskedDocument: unmaskedCnpj});
+  }
 };
 
 const handleInputBirthdate = (event) => {
@@ -84,7 +95,7 @@ const handleInputPassword = (event) => {
     v-model="typedCpf"
     class="register__input" 
     :label="documentLabel" 
-    :maxlength="14"
+    :maxlength="props.isPhysicalPerson ? 14 : 18"
     @keyup="handleInputCpf"
   />
   <InputComponent 
