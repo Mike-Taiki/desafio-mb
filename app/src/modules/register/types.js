@@ -36,8 +36,7 @@ export const LegalPersonStep = (handlePreviousStep, handleNextStep) => {
   step.isValid = computed(() => {
     return (
       step.socialReason?.length >= 10 &&
-      step.unmaskedCnpj?.length >= 10 &&
-      step.unmaskedCnpj?.length !== 14 &&
+      step.unmaskedCnpj?.length === 14 &&
       step.openingDate?.length > 0 &&
       step.unmaskedTelephone?.length >= 10
     );
