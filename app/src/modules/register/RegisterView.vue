@@ -120,7 +120,7 @@ function handleNextStep() {
   currentStep.value++;
 }
 
-function handleFinalStep() {
+async function handleFinalStep() {
   const formData = {
     email: steps.value[StepsEnum.PERSON_TYPE].email,
     personType: PersonTypeTranslationEnum[steps.value[StepsEnum.PERSON_TYPE].selectedPersonType],
@@ -138,26 +138,24 @@ function handleFinalStep() {
     formData.openingDate = steps.value[StepsEnum.INSERT_DATA].openingDate;
   }
 
-  fetch('/registration', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log("Registro realizado com sucesso!");
-        // Aqui você pode adicionar uma mensagem de sucesso ou redirecionar o usuário
-      } else {
-        console.error("Falha no registro");
-        // Aqui você pode mostrar uma mensagem de erro para o usuário
-      }
-    })
-    .catch(error => {
-      console.error("Erro durante o registro:", error);
-      // Aqui você pode mostrar uma mensagem de erro para o usuário
+  try {
+    const response = await fetch('/registration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw errorData;
+    }
+
+    alert("Cadastro realizado com sucesso");
+  } catch (error) {
+    alert("Erro durante o cadastro: " + (error.message || 'Ocorreu um erro inesperado'));
+  }
 }
 
 </script>
